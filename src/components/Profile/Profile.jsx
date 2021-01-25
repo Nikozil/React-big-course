@@ -1,10 +1,13 @@
 import React from 'react';
+import MyPosts from './MyPosts/MyPosts';
+import s from './Profile.module.css';
 
 const Profile = () => {
   return (
-    <div className="content">
-      Main Content
-      <div>
+    <div className={s.content}>
+      <div className={s.mainContent}>
+        Main Content
+        <br />
         <img
           src="https://home.bt.com/images/in-pictures-standoff-between-fox-and-marmot-wins-top-photography-prize-136440298151802601-191015231058.jpg"
           alt=""
@@ -18,14 +21,7 @@ const Profile = () => {
         />
         decriptiom
       </div>
-      <div>
-        My posts
-        <div>New post</div>
-        <div>
-          <div>Post1</div>
-          <div>Post2</div>
-        </div>
-      </div>
+      <MyPosts />
     </div>
   );
 };

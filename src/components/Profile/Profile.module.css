@@ -1,0 +1,7 @@
+.content {
+  grid-area: c;
+  background: rgb(0, 81, 128);
+}
+.mainContent img {
+  width: 1000px;
+}
