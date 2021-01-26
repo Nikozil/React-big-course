@@ -6,3 +6,7 @@
   width: 100px;
   border-radius: 5%;
 }
+.post {
+  padding: 5px;
+  padding-left: 0px;
+}
