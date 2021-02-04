@@ -25,6 +25,9 @@
 }
 .messages {
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .messages .message {
   color: rgb(79, 211, 46);

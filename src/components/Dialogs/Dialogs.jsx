@@ -4,6 +4,12 @@ import s from './Dialogs.module.css';
 import Message from './Message/Dialogs';
 
 const Dialogs = (props) => {
+  let newMessage = React.createRef();
+  let addMessage = (event) => {
+    let text = newMessage.current.value;
+    alert(text);
+  };
+
   return (
     <div className={s.dialogs}>
       <div className={s.dialogsItems}>
@@ -12,9 +18,22 @@ const Dialogs = (props) => {
         ))}
       </div>
       <div className={s.messages}>
-        {props.messagesData.messages.map((i) => (
-          <Message id={i.id} message={i.message} />
-        ))}
+        <div>
+          {props.messagesData.messages.map((i) => (
+            <Message id={i.id} message={i.message} />
+          ))}
+        </div>
+
+        <div className={s.addMessage}>
+          <div>
+            <textarea
+              ref={newMessage}
+              onKeyPress={(event) => {
+                if (event.key === 'Enter') addMessage();
+              }}></textarea>
+          </div>
+          <button onClick={addMessage}>Add Message</button>
+        </div>
       </div>
     </div>
   );

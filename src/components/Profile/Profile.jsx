@@ -15,7 +15,12 @@ const Profile = (props) => {
         />
       </div>
       <ProfileInfo />
-      <MyPosts postsData={props.profileData.posts} />
+      <MyPosts
+        postsData={props.appStore.getState().profilePage.posts}
+        newPostText={props.appStore.getState().profilePage.newPostText}
+        addPost={props.appStore.addPost.bind(props.appStore)}
+        updateNewPost={props.appStore.updateNewPostText.bind(props.appStore)}
+      />
     </div>
   );
 };

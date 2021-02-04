@@ -18,13 +18,14 @@ function App(props) {
           <Route
             path="/dialogs"
             render={() => (
-              <Dialogs messagesData={props.appState.messagesPage} />
+              <Dialogs messagesData={props.appStore.messagesPage} />
             )}
           />
           <Route
             path="/profile"
-            render={() => <Profile profileData={props.appState.profilePage} />}
+            render={() => <Profile appStore={props.appStore} />}
           />
+
           <Route path="/news" component={News} />
           <Route path="/music" component={Music} />
           <Route path="/settings" component={Settings} />
