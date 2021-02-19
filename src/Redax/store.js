@@ -1,7 +1,7 @@
-import React from 'react';
+import messagesReducer from './messages-reduse';
+import profileReducer from './profile-reduser';
+import sidebarReducer from './sidebar-reduser';
 
-const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 let store = {
   _state: {
     profilePage: {
@@ -44,7 +44,9 @@ let store = {
         { id: 2, message: 'HI HI' },
         { id: 3, message: 'OLOLO' },
       ],
+      newMessageBody: '1111111',
     },
+    sidebar: {},
   },
   _callSubcscriber() {
     console.log('State was changed');
@@ -57,30 +59,17 @@ let store = {
   },
 
   dispatch(action) {
-    if (action.type === ADD_POST) {
-      let newPost = {
-        id: 5,
-        message: this._state.profilePage.newPostText,
-        likesCount: 0,
-      };
-      this._state.profilePage.posts.push(newPost);
-      this._state.profilePage.newPostText = '';
-      this._callSubcscriber(this);
-    } else if (action.type === UPDATE_NEW_POST_TEXT) {
-      this._state.profilePage.newPostText = action.newText;
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
 
-      this._callSubcscriber(this);
-    }
+    this._state.messagesPage = messagesReducer(
+      this._state.messagesPage,
+      action
+    );
+
+    this._state.sidebar = sidebarReducer(this._state.sidebar, action);
+
+    this._callSubcscriber(this);
   },
 };
-
-export const addPostActionCreator = () => ({
-  type: ADD_POST,
-});
-
-export const UpdateNewPostTextActionCreator = (text) => ({
-  type: UPDATE_NEW_POST_TEXT,
-  newText: text,
-});
 
 export default store;

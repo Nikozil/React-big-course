@@ -1,5 +1,5 @@
 import React from 'react';
-import MyPosts from './MyPosts/MyPosts';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
 import s from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
@@ -15,11 +15,7 @@ const Profile = (props) => {
         />
       </div>
       <ProfileInfo />
-      <MyPosts
-        postsData={props.appStore.getState().profilePage.posts}
-        newPostText={props.appStore.getState().profilePage.newPostText}
-        dispatch={props.appStore.dispatch.bind(props.appStore)}
-      />
+      <MyPostsContainer appStore={props.appStore} />
     </div>
   );
 };

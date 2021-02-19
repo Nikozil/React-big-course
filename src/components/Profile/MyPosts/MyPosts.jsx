@@ -1,20 +1,19 @@
 import React from 'react';
-import {
-  addPostActionCreator,
-  UpdateNewPostTextActionCreator,
-} from '../../../Redax/state';
+
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
   let newPostElement = React.createRef();
   let addPost = (event) => {
-    props.dispatch(addPostActionCreator());
+    //props.dispatch(addPostActionCreator());
+    props.addPost();
   };
   let onPostChange = () => {
     let text = newPostElement.current.value;
 
-    props.dispatch(UpdateNewPostTextActionCreator(text));
+    //props.dispatch(UpdateNewPostTextActionCreator(text));
+    props.onPostChange(text);
   };
 
   return (
