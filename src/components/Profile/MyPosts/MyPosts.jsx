@@ -5,14 +5,12 @@ import Post from './Post/Post';
 
 const MyPosts = (props) => {
   let newPostElement = React.createRef();
-  let addPost = (event) => {
-    //props.dispatch(addPostActionCreator());
+  let addPost = () => {
     props.addPost();
   };
   let onPostChange = () => {
     let text = newPostElement.current.value;
 
-    //props.dispatch(UpdateNewPostTextActionCreator(text));
     props.onPostChange(text);
   };
 
@@ -32,7 +30,7 @@ const MyPosts = (props) => {
         <div></div>
       </div>
       {props.postsData.map((i) => (
-        <Post message={i.message} likesCount={i.likesCount} />
+        <Post message={i.message} key={i.id} likesCount={i.likesCount} />
       ))}
     </div>
   );

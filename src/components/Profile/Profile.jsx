@@ -3,7 +3,7 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 import s from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
-const Profile = (props) => {
+const Profile = () => {
   return (
     <div>
       <div className={s.mainContent}>
@@ -15,7 +15,7 @@ const Profile = (props) => {
         />
       </div>
       <ProfileInfo />
-      <MyPostsContainer appStore={props.appStore} />
+      <MyPostsContainer />
     </div>
   );
 };
