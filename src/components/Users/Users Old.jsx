@@ -1,41 +1,33 @@
+import * as axios from 'axios';
 import React from 'react';
+import { unfollowAC } from '../../Redax/users-reduser';
 import s from './Users.module.css';
 import userPhoto from '../../assets/images/images.png';
-import { NavLink } from 'react-router-dom';
 
 const Users = (props) => {
-  let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-  let pages = [];
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i);
-  }
+  let getUsers = () => {
+    if (props.users.length === 0) {
+      axios
+        .get('https://social-network.samuraijs.com/api/1.0/users')
+        .then((response) => {
+          props.setUsers(response.data.items);
+        });
+    }
+  };
+
   return (
     <div>
-      <div className={s.pagesButtons}>
-        {pages.map((p) => {
-          return (
-            <span
-              className={
-                s.Page + ' ' + (props.currentPage == p && s.selectedPage)
-              }
-              onClick={() => props.onPageChanged(p)}>
-              {p}
-            </span>
-          );
-        })}
-      </div>
+      <button onClick={() => getUsers()}>Get Users</button>
       {props.users.map((i) => {
         return (
           <div key={i.id}>
             <span>
               <div>
-                <NavLink to={`/profile/${i.id}`}>
-                  <img
-                    src={i.photos.small != null ? i.photos : userPhoto}
-                    alt=""
-                    className={s.photo}
-                  />
-                </NavLink>
+                <img
+                  src={i.photos.small != null ? i.photos : userPhoto}
+                  alt=""
+                  className={s.photo}
+                />
               </div>
               <div>
                 {i.followed ? (

@@ -2,3 +2,16 @@
   width: 100px;
   height: 100px;
 }
+.selectedPage {
+  font-weight: bold;
+}
+.Page {
+  margin: 10px;
+  cursor: pointer;
+}
+
+.pagesButtons {
+  margin: 10px;
+  width: 500px;
+  overflow-x: scroll;
+}

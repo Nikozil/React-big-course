@@ -1,3 +1,22 @@
-.descriptionBlock {
-  padding: 10px;
+.profileInfo {
+  position: relative;
+}
+div {
+  color: rgba(255, 255, 255, 0.808);
+}
+.contacts {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  margin: 15px;
+}
+.contacts a {
+  color: rgb(115, 161, 142);
+}
+.contacts li {
+  list-style-type: none;
+}
+.contacts ul {
+  margin: 0;
+  padding: 0;
 }

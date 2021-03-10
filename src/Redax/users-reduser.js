@@ -1,47 +1,16 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET USERS';
+const SET_CURRENT_PAGE = 'SET CURRENT PAGE';
+const SET_TOTAL_USERS_COUNT = 'SET TOTAL USERS COUNT';
+const TOGGLE_IS_FETCHING = 'TOGGLE IS FETCHING';
 
 let initialState = {
   users: [],
-  // users: [
-  //   {
-  //     id: 1,
-  //     photoUrl:
-  //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFwrowFvpvAj5NsToYvMI8GluLCOjy_MdiUg&usqp=CAU',
-  //     fullname: 'Dima',
-  //     status: 'sleep',
-  //     location: { city: 'Texas', country: 'USA' },
-  //     followed: false,
-  //   },
-  //   {
-  //     id: 2,
-  //     photoUrl:
-  //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFwrowFvpvAj5NsToYvMI8GluLCOjy_MdiUg&usqp=CAU',
-  //     fullname: 'Oleg',
-  //     status: 'wakeup',
-  //     location: { city: 'Boston', country: 'USA' },
-  //     followed: true,
-  //   },
-  //   {
-  //     id: 3,
-  //     photoUrl:
-  //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFwrowFvpvAj5NsToYvMI8GluLCOjy_MdiUg&usqp=CAU',
-  //     fullname: 'Ivan',
-  //     status: 'work',
-  //     location: { city: 'London', country: 'England' },
-  //     followed: false,
-  //   },
-  //   {
-  //     id: 4,
-  //     photoUrl:
-  //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFwrowFvpvAj5NsToYvMI8GluLCOjy_MdiUg&usqp=CAU',
-  //     fullname: 'Vladimir',
-  //     status: 'eat',
-  //     location: { city: 'Berlin', country: 'German' },
-  //     followed: true,
-  //   },
-  // ],
+  pageSize: 10,
+  totalUsersCount: 24,
+  currentPage: 1,
+  isFetching: false,
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -69,24 +38,51 @@ const usersReducer = (state = initialState, action) => {
     case SET_USERS:
       return {
         ...state,
-        users: [...state.users, ...action.users],
+        users: action.users,
+      };
+    case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.currentPage,
+      };
+    case SET_TOTAL_USERS_COUNT:
+      return {
+        ...state,
+        totalUsersCount: action.totalCount,
+      };
+    case TOGGLE_IS_FETCHING:
+      return {
+        ...state,
+        isFetching: action.isFetching,
       };
     default:
       return state;
   }
 };
 
-export const followAC = (userId) => ({
+export const follow = (userId) => ({
   type: FOLLOW,
   userId,
 });
-export const unfollowAC = (userId) => ({
+export const unfollow = (userId) => ({
   type: UNFOLLOW,
   userId,
 });
-export const setUsersAC = (users) => ({
+export const setUsers = (users) => ({
   type: SET_USERS,
   users,
+});
+export const setCurrentPage = (currentPage) => ({
+  type: SET_CURRENT_PAGE,
+  currentPage,
+});
+export const setTotalUsersCount = (totalCount) => ({
+  type: SET_TOTAL_USERS_COUNT,
+  totalCount,
+});
+export const toggleIsFetching = (isFetching) => ({
+  type: TOGGLE_IS_FETCHING,
+  isFetching,
 });
 
 export default usersReducer;
