@@ -7,6 +7,7 @@ import {
   setUsers,
   toggleIsFetching,
   unfollow,
+  toggleFollowingInProgress,
 } from '../../Redax/users-reduser';
 import UsersAPIComponent from './UsersAPIComponent';
 
@@ -17,6 +18,7 @@ let mapStateToProps = (state) => {
     totalUsersCount: state.usersPage.totalUsersCount,
     currentPage: state.usersPage.currentPage,
     isFetching: state.usersPage.isFetching,
+    followingInProgress: state.usersPage.followingInProgress,
   };
 };
 // let mapDispatchToProps = (dispatch) => {
@@ -49,4 +51,5 @@ export default connect(mapStateToProps, {
   setCurrentPage,
   setTotalUsersCount,
   toggleIsFetching,
+  toggleFollowingInProgress,
 })(UsersAPIComponent);

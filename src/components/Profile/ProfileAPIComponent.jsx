@@ -5,6 +5,7 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 import Profile from './Profile';
 import s from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
+import { UsersAPI } from '../../api/api';
 
 class ProfileAPIComponent extends React.Component {
   constructor(props) {
@@ -15,11 +16,9 @@ class ProfileAPIComponent extends React.Component {
     if (!userId) {
       userId = 2;
     }
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-      .then((response) => {
-        this.props.setUsersProfile(response.data);
-      });
+    UsersAPI.getProfile(userId).then((data) => {
+      this.props.setUsersProfile(data);
+    });
   }
 
   render() {
