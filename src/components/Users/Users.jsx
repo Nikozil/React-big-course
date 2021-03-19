@@ -3,6 +3,7 @@ import s from './Users.module.css';
 import userPhoto from '../../assets/images/images.png';
 import { NavLink } from 'react-router-dom';
 import { UsersAPI } from '../../api/api';
+import { follow } from '../../Redax/users-reduser';
 
 const Users = (props) => {
   let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -46,14 +47,7 @@ const Users = (props) => {
                       (id) => id === i.id
                     )}
                     onClick={() => {
-                      props.toggleFollowingInProgress(true, i.id);
-
-                      UsersAPI.deleteUsers(i.id).then((data) => {
-                        if (data.resultCode == 0) {
-                          props.unfollow(i.id);
-                        }
-                        props.toggleFollowingInProgress(false, i.id);
-                      });
+                      props.unfollow(i.id);
                     }}>
                     Unfollow
                   </button>
@@ -63,14 +57,7 @@ const Users = (props) => {
                       (id) => id === i.id
                     )}
                     onClick={() => {
-                      props.toggleFollowingInProgress(true, i.id);
-
-                      UsersAPI.postUsers(i.id).then((data) => {
-                        if (data.resultCode == 0) {
-                          props.follow(i.id);
-                        }
-                        props.toggleFollowingInProgress(false, i.id);
-                      });
+                      props.follow(i.id);
                     }}>
                     Follow
                   </button>

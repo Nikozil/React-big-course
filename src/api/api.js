@@ -12,15 +12,18 @@ const getUsers = (currentPage, pageSize) => {
     .get(`users?page=${currentPage}&count=${pageSize}`)
     .then((response) => response.data);
 };
-const postUsers = (id) => {
+const follow = (id) => {
   return instance.post(`follow/${id}`).then((response) => response.data);
 };
-const deleteUsers = (id) => {
+const unfollow = (id) => {
   return instance.delete(`follow/${id}`).then((response) => response.data);
 };
 
 const getProfile = (userId) => {
   return instance.get(`profile/${userId}`).then((response) => response.data);
 };
+const authme = () => {
+  return instance.get(`auth/me`).then((response) => response.data);
+};
 
-export const UsersAPI = { getUsers, postUsers, deleteUsers, getProfile };
+export const UsersAPI = { getUsers, follow, unfollow, getProfile, authme };

@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  follow,
+  acceptfollow,
   setCurrentPage,
-  setTotalUsersCount,
-  setUsers,
-  toggleIsFetching,
-  unfollow,
+  acceptunfollow,
   toggleFollowingInProgress,
+  getUsers,
+  follow,
+  unfollow,
 } from '../../Redax/users-reduser';
 import UsersAPIComponent from './UsersAPIComponent';
 
@@ -21,35 +21,13 @@ let mapStateToProps = (state) => {
     followingInProgress: state.usersPage.followingInProgress,
   };
 };
-// let mapDispatchToProps = (dispatch) => {
-//   return {
-//     follow: (userId) => {
-//       dispatch(followAC(userId));
-//     },
-//     unfollow: (userId) => {
-//       dispatch(unfollowAC(userId));
-//     },
-//     setUsers: (users) => {
-//       dispatch(setUsersAC(users));
-//     },
-//     setCurrentPage: (currentPage) => {
-//       dispatch(setCurrentPageAC(currentPage));
-//     },
-//     setTotalUsersCount: (totalCount) => {
-//       dispatch(setTotalUsersCountAC(totalCount));
-//     },
-//     toggleIsFetching: (isFetching) => {
-//       dispatch(toggleIsFetchingAC(isFetching));
-//     },
-//   };
-// };
 
 export default connect(mapStateToProps, {
+  acceptfollow,
+  acceptunfollow,
+  setCurrentPage,
+  toggleFollowingInProgress,
+  getUsers,
   follow,
   unfollow,
-  setUsers,
-  setCurrentPage,
-  setTotalUsersCount,
-  toggleIsFetching,
-  toggleFollowingInProgress,
 })(UsersAPIComponent);
