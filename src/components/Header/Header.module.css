@@ -3,8 +3,10 @@
   grid-area: h;
 }
 .header img {
-  height: 100px;
+  height: 90px;
+  border-radius: 50%;
   background: rgb(146, 50, 130);
+  margin: 5px;
 }
 .loginBlock {
   float: right;

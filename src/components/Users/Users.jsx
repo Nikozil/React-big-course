@@ -19,7 +19,7 @@ const Users = (props) => {
           return (
             <span
               className={
-                s.Page + ' ' + (props.currentPage == p && s.selectedPage)
+                s.Page + ' ' + (props.currentPage === p && s.selectedPage)
               }
               onClick={() => props.onPageChanged(p)}>
               {p}

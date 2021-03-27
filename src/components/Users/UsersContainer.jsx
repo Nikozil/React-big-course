@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import {
   acceptfollow,
   setCurrentPage,
@@ -22,12 +24,15 @@ let mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
-  acceptfollow,
-  acceptunfollow,
-  setCurrentPage,
-  toggleFollowingInProgress,
-  getUsers,
-  follow,
-  unfollow,
-})(UsersAPIComponent);
+export default compose(
+  withAuthRedirect,
+  connect(mapStateToProps, {
+    acceptfollow,
+    acceptunfollow,
+    setCurrentPage,
+    toggleFollowingInProgress,
+    getUsers,
+    follow,
+    unfollow,
+  })
+)(UsersAPIComponent);

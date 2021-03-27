@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
-import { setUserData, makelogin } from '../../Redax/auth-reduser';
+import { setUserData, makelogin, logout } from '../../Redax/auth-reduser';
 import Header from './Header';
 import { UsersAPI } from '../../api/api';
 
@@ -20,6 +20,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setUserData, makelogin })(
+export default connect(mapStateToProps, { setUserData, makelogin, logout })(
   HeaderContainer
 );

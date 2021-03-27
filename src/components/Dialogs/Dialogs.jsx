@@ -1,24 +1,20 @@
 import React from 'react';
-import { Redirect } from 'react-router';
-
+import { Field, Form } from 'react-final-form';
+import { TextArea } from '../commons/FormControls/FormsControls';
+import {
+  composeValidators,
+  maxLengthCreator,
+  requireField,
+} from '../utils/validators/validates';
 import DialogItem from './DialogItem/DialogItem';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';
 
 const Dialogs = (props) => {
-  let newMessage = React.createRef();
-
-  let sendMessage = () => {
-    props.sendMessage();
+  let sendMessage = (message) => {
+    console.log(message);
+    props.sendMessage(message);
   };
-  let onMessageChange = () => {
-    let text = newMessage.current.value;
-
-    props.onMessageChange(text);
-  };
-  if (props.isAuth == false) {
-    return <Redirect to={'/login'} />;
-  }
 
   return (
     <div className={s.dialogs}>
@@ -35,18 +31,36 @@ const Dialogs = (props) => {
         </div>
 
         <div className={s.addMessage}>
-          <div>
-            <textarea
-              value={props.newMessageBody}
-              ref={newMessage}
-              onChange={onMessageChange}
-              onKeyPress={(event) => {
-                if (event.key === 'Enter') sendMessage();
-              }}></textarea>
-          </div>
-          <button onClick={sendMessage}>Add Message</button>
+          <DialogForm sendMessage={sendMessage} />
         </div>
       </div>
+    </div>
+  );
+};
+const DialogForm = (props) => {
+  return (
+    <div>
+      <Form
+        onSubmit={(MessageData) => {
+          props.sendMessage(MessageData.message);
+        }}
+        render={({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <div>
+              <Field
+                name="message"
+                validate={composeValidators(
+                  requireField,
+                  maxLengthCreator(100)
+                )}
+                component={TextArea}
+                type="text"
+                placeholder="Enter your message"></Field>
+            </div>
+            <button type="submit">Add Message</button>
+          </form>
+        )}
+      />
     </div>
   );
 };

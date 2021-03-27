@@ -1,38 +1,54 @@
 import React from 'react';
-
+import { Field, Form } from 'react-final-form';
+import {
+  maxLengthCreator,
+  requireField,
+  composeValidators,
+} from '../../utils/validators/validates';
+import { TextArea } from '../../commons/FormControls/FormsControls';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
-  let newPostElement = React.createRef();
-  let addPost = () => {
-    props.addPost();
-  };
-  let onPostChange = () => {
-    let text = newPostElement.current.value;
-
-    props.onPostChange(text);
+  let addPost = (text) => {
+    props.addPost(text);
   };
 
   return (
     <div className={s.postsBlock}>
       <h3>My posts</h3>
       <div>
-        <div>
-          <textarea
-            ref={newPostElement}
-            value={props.newPostText}
-            onChange={onPostChange}
-          />
-        </div>
-
-        <button onClick={addPost}>Add post</button>
-        <div></div>
+        <MyPostsForm addPost={addPost} />
       </div>
       {props.postsData.map((i) => (
         <Post message={i.message} key={i.id} likesCount={i.likesCount} />
       ))}
     </div>
+  );
+};
+
+const MyPostsForm = (props) => {
+  return (
+    <Form
+      onSubmit={(postData) => {
+        props.addPost(postData.post);
+      }}
+      render={({ handleSubmit }) => {
+        return (
+          <form onSubmit={handleSubmit}>
+            <div>
+              <Field
+                validate={composeValidators(requireField, maxLengthCreator(30))}
+                name="post"
+                component={TextArea}
+                type="text"
+                placeholder="Enter your post"></Field>
+            </div>
+            <button type="submit">Add Post</button>
+          </form>
+        );
+      }}
+    />
   );
 };
 
