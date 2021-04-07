@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, Form } from 'react-final-form';
 import {
   maxLengthCreator,
-  requireField,
+  required,
   composeValidators,
 } from '../../utils/validators/validates';
 import { TextArea } from '../../commons/FormControls/FormsControls';
@@ -38,7 +38,7 @@ const MyPostsForm = (props) => {
           <form onSubmit={handleSubmit}>
             <div>
               <Field
-                validate={composeValidators(requireField, maxLengthCreator(30))}
+                validate={composeValidators(required, maxLengthCreator(30))}
                 name="post"
                 component={TextArea}
                 type="text"

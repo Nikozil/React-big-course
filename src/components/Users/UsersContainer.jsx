@@ -7,31 +7,38 @@ import {
   setCurrentPage,
   acceptunfollow,
   toggleFollowingInProgress,
-  getUsers,
+  requestUsers,
   follow,
   unfollow,
 } from '../../Redax/users-reduser';
+import {
+  getUsers,
+  getPageSize,
+  getTotalUsersCount,
+  getCurrentPage,
+  getIsFetching,
+  getFollowingInProgress,
+} from '../../Redax/users-selectors';
 import UsersAPIComponent from './UsersAPIComponent';
 
 let mapStateToProps = (state) => {
   return {
-    users: state.usersPage.users,
-    pageSize: state.usersPage.pageSize,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    currentPage: state.usersPage.currentPage,
-    isFetching: state.usersPage.isFetching,
-    followingInProgress: state.usersPage.followingInProgress,
+    users: getUsers(state),
+    pageSize: getPageSize(state),
+    totalUsersCount: getTotalUsersCount(state),
+    currentPage: getCurrentPage(state),
+    isFetching: getIsFetching(state),
+    followingInProgress: getFollowingInProgress(state),
   };
 };
 
 export default compose(
-  withAuthRedirect,
   connect(mapStateToProps, {
     acceptfollow,
     acceptunfollow,
     setCurrentPage,
     toggleFollowingInProgress,
-    getUsers,
+    requestUsers,
     follow,
     unfollow,
   })

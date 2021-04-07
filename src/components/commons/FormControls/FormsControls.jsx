@@ -21,7 +21,7 @@ const FormControl = ({ input, meta, ...props }) => {
     <div
       className={s.formControl + ' ' + (meta.error && meta.touched && s.error)}>
       {props.children}
-      {meta.error && meta.touched && <span>Ошибка</span>}
+      {meta.error && meta.touched && <span>Ошибка: {meta.error}</span>}
     </div>
   );
 };

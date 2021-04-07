@@ -4,7 +4,7 @@ import { TextArea } from '../commons/FormControls/FormsControls';
 import {
   composeValidators,
   maxLengthCreator,
-  requireField,
+  required,
 } from '../utils/validators/validates';
 import DialogItem from './DialogItem/DialogItem';
 import s from './Dialogs.module.css';
@@ -49,10 +49,7 @@ const DialogForm = (props) => {
             <div>
               <Field
                 name="message"
-                validate={composeValidators(
-                  requireField,
-                  maxLengthCreator(100)
-                )}
+                validate={composeValidators(required, maxLengthCreator(100))}
                 component={TextArea}
                 type="text"
                 placeholder="Enter your message"></Field>

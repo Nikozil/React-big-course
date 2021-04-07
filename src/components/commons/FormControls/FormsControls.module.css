@@ -7,3 +7,18 @@
 .formControl.error span {
   color: red;
 }
+
+.formSummaryError {
+  padding: 5px;
+  background-color: red;
+  animation: blink 2s infinite;
+  color: white;
+}
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

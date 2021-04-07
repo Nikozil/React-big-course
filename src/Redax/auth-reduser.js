@@ -1,6 +1,5 @@
+import { stopSubmit } from 'redux-form';
 import { AuthAPI } from '../api/api';
-import { stopSubmit } from 'react-final-form';
-import { FORM_ERROR } from 'final-form';
 
 const SET_USER_DATA = 'SET_USER_DATA';
 const SET_CAPTURE_URL = 'SET_CAPTURE_URL';
@@ -53,7 +52,7 @@ export const makeCapture = () => ({
 
 export const makelogin = () => {
   return (dispatch) => {
-    AuthAPI.authme().then((data) => {
+    return AuthAPI.authme().then((data) => {
       if (data.resultCode === 0) {
         let { id, email, login } = data.data;
         dispatch(setUserData(id, email, login, true));
@@ -70,7 +69,11 @@ export const login = (email, password, rememberMe, captcha) => {
       if (data.resultCode === 0) {
         dispatch(makelogin());
       } else {
-        return { [FORM_ERROR]: 'Login Failed' };
+        let message =
+          data.messages.length > 0
+            ? data.messages[0]
+            : 'Email or pass is wrong';
+        dispatch(stopSubmit('login', { _error: message }));
       }
     });
   };
