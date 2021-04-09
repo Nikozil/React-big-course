@@ -4,6 +4,7 @@
 }
 .selectedPage {
   font-weight: bold;
+  color: black;
 }
 .Page {
   margin: 10px;

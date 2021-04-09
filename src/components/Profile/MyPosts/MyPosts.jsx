@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Field, Form } from 'react-final-form';
 import {
   maxLengthCreator,
@@ -8,8 +8,9 @@ import {
 import { TextArea } from '../../commons/FormControls/FormsControls';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
+import { render } from '@testing-library/react';
 
-const MyPosts = (props) => {
+const MyPosts = React.memo((props) => {
   let addPost = (text) => {
     props.addPost(text);
   };
@@ -25,7 +26,7 @@ const MyPosts = (props) => {
       ))}
     </div>
   );
-};
+});
 
 const MyPostsForm = (props) => {
   return (

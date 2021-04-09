@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect';
+
 export const getUsers = (state) => {
   return state.usersPage.users;
 };
@@ -16,3 +18,7 @@ export const getIsFetching = (state) => {
 export const getFollowingInProgress = (state) => {
   return state.usersPage.followingInProgress;
 };
+
+// export const getUsersSuper = createSelector(getUsers,(state) => {
+//   return state.usersPage.users.filter((u) => true);
+// });
