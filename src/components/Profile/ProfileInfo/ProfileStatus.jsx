@@ -1,7 +1,4 @@
 import React from 'react';
-import s from './ProfileInfo.module.css';
-import Preloader from '../../../assets/images/Preloader.gif';
-import { updateUserStatus } from '../../../Redax/profile-reduser';
 
 class ProfileStatus extends React.Component {
   state = {

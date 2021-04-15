@@ -1,79 +1,66 @@
 import React from 'react';
 import s from './ProfileInfo.module.css';
-import Preloader from '../../../assets/images/Preloader.gif';
-import ProfileStatus from './ProfileStatus';
+import Preloader from '../../../assets/Preloaders/Preloader';
 import ProfileStatusWithHooks from './ProfileStatusWithHooks';
+import Avatar from '../../commons/Avatar/Avatar';
 
-const ProfileInfo = (props) => {
-  if (!props.profile) {
-    return <img src={Preloader} alt="" />;
+const ProfileInfo = ({ profile, status, updateUserStatus }) => {
+  if (!profile) {
+    return <Preloader />;
   }
   return (
     <div className={s.profileInfo}>
       <ProfileStatusWithHooks
-        status={props.status}
-        updateUserStatus={props.updateUserStatus}
+        status={status}
+        updateUserStatus={updateUserStatus}
       />
-      <div>Имя: {props.profile.fullName}</div>
+      <div>Имя: {profile.fullName}</div>
       <div>
-        <img src={props.profile.photos.large} alt="" />
+        <Avatar owner={profile} size={'large'} className={s.photo} />
       </div>
-      <div>Обо мне: {props.profile.aboutMe}</div>
+      <div>Обо мне: {profile.aboutMe}</div>
       <div className={s.contacts}>
         Контакты:
         <ul>
           <li>
             facebook:{' '}
-            <a href={props.profile.contacts.facebook}>
-              {props.profile.contacts.facebook}
-            </a>
+            <a href={profile.contacts.facebook}>{profile.contacts.facebook}</a>
           </li>
           <li>
             website:{' '}
-            <a href={props.profile.contacts.website}>
-              {props.profile.contacts.website}
-            </a>
+            <a href={profile.contacts.website}>{profile.contacts.website}</a>
           </li>
           <li>
-            vk:{' '}
-            <a href={props.profile.contacts.vk}>{props.profile.contacts.vk}</a>
+            vk: <a href={profile.contacts.vk}>{profile.contacts.vk}</a>
           </li>
           <li>
             twitter:{' '}
-            <a href={props.profile.contacts.twitter}>
-              {props.profile.contacts.twitter}
-            </a>
+            <a href={profile.contacts.twitter}>{profile.contacts.twitter}</a>
           </li>
           <li>
             instagram:{' '}
-            <a href={props.profile.contacts.instagram}>
-              {props.profile.contacts.instagram}
+            <a href={profile.contacts.instagram}>
+              {profile.contacts.instagram}
             </a>
           </li>
           <li>
             youtube:{' '}
-            <a href={props.profile.contacts.youtube}>
-              {props.profile.contacts.youtube}
-            </a>
+            <a href={profile.contacts.youtube}>{profile.contacts.youtube}</a>
           </li>
           <li>
             github:{' '}
-            <a href={props.profile.contacts.github}>
-              {props.profile.contacts.github}
-            </a>
+            <a href={profile.contacts.github}>{profile.contacts.github}</a>
           </li>
           <li>
             mainLink:{' '}
-            <a href={props.profile.contacts.mainLink}>
-              {props.profile.contacts.mainLink}
-            </a>
+            <a href={profile.contacts.mainLink}>{profile.contacts.mainLink}</a>
           </li>
         </ul>
       </div>
       <div>
         Работа:
-        <div>{props.profile.lookingForAJob}</div>
-        <div>{props.profile.lookingForAJobDescription}</div>
+        <div>{profile.lookingForAJob}</div>
+        <div>{profile.lookingForAJobDescription}</div>
       </div>
     </div>
   );

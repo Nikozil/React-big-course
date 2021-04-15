@@ -1,62 +1,47 @@
 import React from 'react';
-import s from './Login.module.css';
-import { Field, reduxForm } from 'redux-form';
-import { AuthAPI } from '../../api/api';
-import { InputArea } from '../commons/FormControls/FormsControls';
-import {
-  composeValidators,
-  maxLengthCreator,
-  required,
-} from '../utils/validators/validates';
+import { reduxForm } from 'redux-form';
+import { CreateField, InputArea } from '../commons/FormControls/FormsControls';
+import { maxLengthCreator, required } from '../../utils/validators/validates';
 import { connect } from 'react-redux';
 import { login, capture } from '../../Redax/auth-reduser';
 import { Redirect } from 'react-router';
 import FC from '../commons/FormControls/FormsControls.module.css';
 let maxLength30 = maxLengthCreator(30);
 
-const LoginForm = (props) => {
-  if (props.url == '') props.capture();
-  let img = props.url;
+const LoginForm = ({ handleSubmit, error, url, security, capture }) => {
+  if (url === '') capture();
+  let img = url;
 
   return (
-    <form onSubmit={props.handleSubmit}>
-      <div>
-        <Field
-          component={InputArea}
-          validate={[required, maxLength30]}
-          name="email"
-          type="text"
-          placeholder={'Login'}
-        />
-      </div>
-      <div>
-        <Field
-          component={InputArea}
-          validate={[required, maxLength30]}
-          name="password"
-          type="password"
-          placeholder={'Password'}
-        />
-      </div>
-      <div>
-        <Field component={'input'} name="rememberMe" type={'checkbox'} />
-        Remember me
-      </div>
-      {props.security ? (
-        <div>
-          <img src={img} alt="" />
-          <Field
-            component={InputArea}
-            validate={[required, maxLength30]}
-            name="captcha"
-            type={'text'}
-          />
-          captcha
-        </div>
-      ) : null}
-      {props.error ? (
-        <div className={FC.formSummaryError}> {props.error}</div>
-      ) : null}
+    <form onSubmit={handleSubmit}>
+      {CreateField(
+        'Login',
+        'email',
+        [required, maxLength30],
+        InputArea,
+        'text'
+      )}
+      {CreateField(
+        'Password',
+        'password',
+        [required, maxLength30],
+        InputArea,
+        'password'
+      )}
+      {CreateField(null, 'rememberMe', [], 'input', 'checkbox', 'Remember me')}
+
+      {security
+        ? CreateField(
+            'Password',
+            'captcha',
+            [required, maxLength30],
+            InputArea,
+            'text',
+            null,
+            img
+          )
+        : null}
+      {error ? <div className={FC.formSummaryError}> {error}</div> : null}
 
       <div>
         <button type="submit">Login</button>

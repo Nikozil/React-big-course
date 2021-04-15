@@ -1,8 +1,9 @@
 import { ProfileAPI } from '../api/api';
 
-const ADD_POST = 'ADD-POST';
-const SET_USER_PROFILE = 'SET-USER-PROFILE';
-const SET_USER_STATUS = 'SET-USER-STATUS';
+const ADD_POST = 'learningReact/profile/ADD-POST';
+const DELETE_POST = 'learningReact/profile/DELETE-POST';
+const SET_USER_PROFILE = 'learningReact/profile/SET-USER-PROFILE';
+const SET_USER_STATUS = 'learningReact/profile/SET-USER-STATUS';
 
 let initialState = {
   posts: [
@@ -25,6 +26,12 @@ const profileReducer = (state = initialState, action) => {
 
       return { ...state, posts: [...state.posts, newPost], newPostText: '' };
     }
+    case DELETE_POST: {
+      return {
+        ...state,
+        posts: state.posts.filter((i) => i.id !== action.id),
+      };
+    }
 
     case SET_USER_PROFILE:
       return {
@@ -46,6 +53,10 @@ export default profileReducer;
 export const addPostActionCreator = (text) => ({
   type: ADD_POST,
   NewPost: text,
+});
+export const deletePost = (id) => ({
+  type: DELETE_POST,
+  id,
 });
 
 export const setUsersProfile = (profile) => ({

@@ -1,11 +1,6 @@
-import * as axios from 'axios';
 import React from 'react';
-import { Redirect, withRouter } from 'react-router';
-import MyPostsContainer from './MyPosts/MyPostsContainer';
+import { withRouter } from 'react-router';
 import Profile from './Profile';
-import s from './Profile.module.css';
-import ProfileInfo from './ProfileInfo/ProfileInfo';
-import { UsersAPI } from '../../api/api';
 import { connect } from 'react-redux';
 import {
   setUsersProfile,
@@ -13,12 +8,8 @@ import {
   getUserStatus,
   updateUserStatus,
 } from '../../Redax/profile-reduser';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 class ProfileContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     let userId = this.props.match.params.userId;
     if (!userId) {

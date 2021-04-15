@@ -1,9 +1,9 @@
 import { stopSubmit } from 'redux-form';
 import { AuthAPI } from '../api/api';
 
-const SET_USER_DATA = 'SET_USER_DATA';
-const SET_CAPTURE_URL = 'SET_CAPTURE_URL';
-const MAKE_CAPTURE = 'MAKE_CAPTURE';
+const SET_USER_DATA = 'learningReact/auth/SET_USER_DATA';
+const SET_CAPTURE_URL = 'learningReact/auth/SET_CAPTURE_URL';
+const MAKE_CAPTURE = 'learningReact/auth/MAKE_CAPTURE';
 
 let initialState = {
   userId: null,
@@ -50,48 +50,41 @@ export const makeCapture = () => ({
   type: MAKE_CAPTURE,
 });
 
-export const makelogin = () => {
-  return (dispatch) => {
-    return AuthAPI.authme().then((data) => {
-      if (data.resultCode === 0) {
-        let { id, email, login } = data.data;
-        dispatch(setUserData(id, email, login, true));
-      }
-    });
-  };
+export const makelogin = () => async (dispatch) => {
+  let data = await AuthAPI.authme();
+  if (data.resultCode === 0) {
+    let { id, email, login } = data.data;
+    dispatch(setUserData(id, email, login, true));
+  }
 };
+
 export const login = (email, password, rememberMe, captcha) => {
-  return (dispatch) => {
-    AuthAPI.login(email, password, rememberMe, captcha).then((data) => {
-      if (data.resultCode === 10) {
-        dispatch(makeCapture());
-      }
-      if (data.resultCode === 0) {
-        dispatch(makelogin());
-      } else {
-        let message =
-          data.messages.length > 0
-            ? data.messages[0]
-            : 'Email or pass is wrong';
-        dispatch(stopSubmit('login', { _error: message }));
-      }
-    });
+  return async (dispatch) => {
+    let data = await AuthAPI.login(email, password, rememberMe, captcha);
+    if (data.resultCode === 10) {
+      dispatch(makeCapture());
+    }
+    if (data.resultCode === 0) {
+      dispatch(makelogin());
+    } else {
+      let message =
+        data.messages.length > 0 ? data.messages[0] : 'Email or pass is wrong';
+      dispatch(stopSubmit('login', { _error: message }));
+    }
   };
 };
 export const logout = () => {
-  return (dispatch) => {
-    AuthAPI.logout().then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(setUserData(null, null, null, false));
-      }
-    });
+  return async (dispatch) => {
+    let data = await AuthAPI.logout();
+    if (data.resultCode === 0) {
+      dispatch(setUserData(null, null, null, false));
+    }
   };
 };
 export const capture = () => {
-  return (dispatch) => {
-    AuthAPI.security().then((url) => {
-      dispatch(setCaptureUrl(url));
-    });
+  return async (dispatch) => {
+    let url = await AuthAPI.security();
+    dispatch(setCaptureUrl(url));
   };
 };
 export default authReducer;

@@ -5,7 +5,7 @@ import {
   composeValidators,
   maxLengthCreator,
   required,
-} from '../utils/validators/validates';
+} from '../../utils/validators/validates';
 import DialogItem from './DialogItem/DialogItem';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';

@@ -1,8 +1,6 @@
-import { stopSubmit } from 'redux-form';
-import { AuthAPI } from '../api/api';
 import { makelogin } from './auth-reduser';
 
-const SET_INITIALIZED = 'SET_INITIALIZED';
+const SET_INITIALIZED = 'learningReact/app/SET_INITIALIZED';
 
 let initialState = {
   initialized: false,

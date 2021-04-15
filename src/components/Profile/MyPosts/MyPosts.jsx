@@ -1,14 +1,13 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { Field, Form } from 'react-final-form';
 import {
   maxLengthCreator,
   required,
   composeValidators,
-} from '../../utils/validators/validates';
+} from '../../../utils/validators/validates';
 import { TextArea } from '../../commons/FormControls/FormsControls';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import { render } from '@testing-library/react';
 
 const MyPosts = React.memo((props) => {
   let addPost = (text) => {

@@ -1,23 +1,21 @@
 import React from 'react';
 import Users from './Users';
-import Preloader from '../../assets/images/Preloader.gif';
-import { UsersAPI } from '../../api/api';
+import Preloader from '../../assets/Preloaders/Preloader';
 
 class UsersAPIComponent extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
-    this.props.requestUsers(this.props.currentPage, this.props.pageSize);
+    const { currentPage, pageSize } = this.props;
+    this.props.requestUsers(currentPage, pageSize);
   }
   onPageChanged = (p) => {
-    this.props.requestUsers(p, this.props.pageSize);
+    const { pageSize } = this.props;
+    this.props.requestUsers(p, pageSize);
   };
 
   render() {
     return (
       <>
-        {this.props.isFetching ? <img src={Preloader} /> : null}
+        {this.props.isFetching ? <Preloader /> : null}
         <Users
           totalUsersCount={this.props.totalUsersCount}
           pageSize={this.props.pageSize}

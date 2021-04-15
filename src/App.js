@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, Route, withRouter } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import './App.css';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
@@ -9,20 +9,19 @@ import Music from './components/Music/Music';
 import Navbar from './components/Navbar/Navbar';
 import News from './components/News/News';
 import ProfileContainer from './components/Profile/ProfileContainer';
-
 import Settings from './components/Settings/Settings';
 import UsersContainer from './components/Users/UsersContainer';
 import { makelogin } from '../src/Redax/auth-reduser';
 import { compose } from 'redux';
 import { initializeAPP } from '../src/Redax/app-reducer';
-import Preloader from '../src/assets/images/Preloader.gif';
+import Preloader from '../src/assets/Preloaders/Preloader';
 class App extends React.Component {
   componentDidMount() {
     this.props.initializeAPP();
   }
   render() {
     if (!this.props.initialized) {
-      return <img src={Preloader} />;
+      return <Preloader />;
     }
 
     return (
