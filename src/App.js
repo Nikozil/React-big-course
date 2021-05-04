@@ -15,13 +15,22 @@ import { makelogin } from '../src/Redax/auth-reduser';
 import { compose } from 'redux';
 import { initializeAPP } from '../src/Redax/app-reducer';
 import Preloader from '../src/assets/Preloaders/Preloader';
+import store from './Redax/redux-store';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+
 class App extends React.Component {
   componentDidMount() {
     this.props.initializeAPP();
   }
   render() {
     if (!this.props.initialized) {
-      return <Preloader />;
+      return (
+        <div>
+          <Preloader />
+          <div>learn react</div>
+        </div>
+      );
     }
 
     return (
@@ -48,7 +57,18 @@ const mapStateToProps = (state) => ({
   initialized: state.app.initialized,
 });
 
-export default compose(
+let AppContainer = compose(
   withRouter,
   connect(mapStateToProps, { makelogin, initializeAPP })
 )(App);
+
+const MainApp = (props) => (
+  <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <AppContainer />
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>
+);
+export default MainApp;

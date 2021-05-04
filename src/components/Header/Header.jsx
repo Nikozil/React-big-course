@@ -7,6 +7,7 @@ const Header = ({ logout, isAuth, login }) => {
   return (
     <header className={s.header}>
       <img src={Logo} alt="" />
+
       <div className={s.loginBlock}>
         {isAuth ? (
           <>
