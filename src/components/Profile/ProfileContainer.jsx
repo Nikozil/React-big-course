@@ -7,10 +7,14 @@ import {
   getUsersProfile,
   getUserStatus,
   updateUserStatus,
+  savePhoto,
+  saveProfile,
 } from '../../Redax/profile-reduser';
 import { compose } from 'redux';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+
 class ProfileContainer extends React.Component {
-  componentDidMount() {
+  refreshProfile() {
     let userId = this.props.match.params.userId;
     if (!userId) {
       userId = this.props.authUserId;
@@ -21,13 +25,23 @@ class ProfileContainer extends React.Component {
     this.props.getUsersProfile(userId);
     this.props.getUserStatus(userId);
   }
+  componentDidMount() {
+    this.refreshProfile();
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.match.params.userId != prevProps.match.params.userId) {
+      this.refreshProfile();
+    }
+  }
 
   render() {
     return (
       <Profile
         {...this.props}
+        isOwner={!this.props.match.params.userId}
         profile={this.props.profile}
         updateUserStatus={this.props.updateUserStatus}
+        savePhoto={this.props.savePhoto}
       />
     );
   }
@@ -48,6 +62,9 @@ export default compose(
     getUsersProfile,
     getUserStatus,
     updateUserStatus,
+    savePhoto,
+    saveProfile,
   }),
-  withRouter
+  withRouter,
+  withAuthRedirect
 )(ProfileContainer);

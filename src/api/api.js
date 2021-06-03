@@ -37,6 +37,18 @@ export const ProfileAPI = {
     let response = await instance.put(`profile/status`, { status: status });
     return response.data;
   },
+  async savePhoto(photoFile) {
+    const formData = new FormData();
+    formData.append('image', photoFile);
+    let response = await instance.put(`/profile/photo`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+  async saveProfile(profile) {
+    let response = await instance.put(`profile/`, profile);
+    return response.data;
+  },
 };
 export const AuthAPI = {
   async authme() {
@@ -44,11 +56,12 @@ export const AuthAPI = {
     return response.data;
   },
 
-  async login(email, password, rememberMe = false) {
+  async login(email, password, rememberMe = false, captcha = null) {
     let response = await instance.post(`/auth/login`, {
       email,
       password,
       rememberMe,
+      captcha,
     });
     return response.data;
   },
@@ -56,7 +69,9 @@ export const AuthAPI = {
     let response = await instance.delete(`/auth/login`);
     return response.data;
   },
-  async security() {
+};
+export const securityAPI = {
+  async getCaptchaURL() {
     let response = await instance.get(`/security/get-captcha-url`);
     return response.data.url;
   },

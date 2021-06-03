@@ -3,15 +3,12 @@ import { reduxForm } from 'redux-form';
 import { CreateField, InputArea } from '../commons/FormControls/FormsControls';
 import { maxLengthCreator, required } from '../../utils/validators/validates';
 import { connect } from 'react-redux';
-import { login, capture } from '../../Redax/auth-reduser';
+import { login } from '../../Redax/auth-reduser';
 import { Redirect } from 'react-router';
 import FC from '../commons/FormControls/FormsControls.module.css';
 let maxLength30 = maxLengthCreator(30);
 
-const LoginForm = ({ handleSubmit, error, url, security, capture }) => {
-  if (url === '') capture();
-  let img = url;
-
+const LoginForm = ({ handleSubmit, error, captureUrl }) => {
   return (
     <form onSubmit={handleSubmit}>
       {CreateField(
@@ -30,17 +27,16 @@ const LoginForm = ({ handleSubmit, error, url, security, capture }) => {
       )}
       {CreateField(null, 'rememberMe', [], 'input', 'checkbox', 'Remember me')}
 
-      {security
-        ? CreateField(
-            'Password',
-            'captcha',
-            [required, maxLength30],
-            InputArea,
-            'text',
-            null,
-            img
-          )
-        : null}
+      {captureUrl &&
+        CreateField(
+          'captcha',
+          'captcha',
+          [required, maxLength30],
+          InputArea,
+          'text',
+          null,
+          captureUrl
+        )}
       {error ? <div className={FC.formSummaryError}> {error}</div> : null}
 
       <div>
@@ -72,9 +68,7 @@ const Login = (props) => {
       <h1>Login</h1>
       <LoginReduxForm
         login={props.login}
-        capture={props.capture}
-        url={props.url}
-        security={props.security}
+        captureUrl={props.captureUrl}
         onSubmit={onSubmit}
       />
     </div>
@@ -83,9 +77,8 @@ const Login = (props) => {
 const mapStateToProps = (state) => {
   return {
     isAuth: state.auth.isAuth,
-    url: state.auth.captureULR,
-    security: state.auth.securityCapture,
+    captureUrl: state.auth.captureULR,
   };
 };
 
-export default connect(mapStateToProps, { login, capture })(Login);
+export default connect(mapStateToProps, { login })(Login);

@@ -1,9 +1,8 @@
 import { stopSubmit } from 'redux-form';
-import { AuthAPI } from '../api/api';
+import { AuthAPI, securityAPI } from '../api/api';
 
 const SET_USER_DATA = 'learningReact/auth/SET_USER_DATA';
 const SET_CAPTURE_URL = 'learningReact/auth/SET_CAPTURE_URL';
-const MAKE_CAPTURE = 'learningReact/auth/MAKE_CAPTURE';
 
 let initialState = {
   userId: null,
@@ -11,8 +10,7 @@ let initialState = {
   login: null,
   isAuth: false,
   isFetching: true,
-  captureULR: '',
-  securityCapture: false,
+  captureULR: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -26,11 +24,6 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         captureULR: action.url,
-      };
-    case MAKE_CAPTURE:
-      return {
-        ...state,
-        securityCapture: true,
       };
 
     default:
@@ -46,9 +39,6 @@ export const setCaptureUrl = (url) => ({
   type: SET_CAPTURE_URL,
   url: url,
 });
-export const makeCapture = () => ({
-  type: MAKE_CAPTURE,
-});
 
 export const makelogin = () => async (dispatch) => {
   let data = await AuthAPI.authme();
@@ -61,12 +51,13 @@ export const makelogin = () => async (dispatch) => {
 export const login = (email, password, rememberMe, captcha) => {
   return async (dispatch) => {
     let data = await AuthAPI.login(email, password, rememberMe, captcha);
-    if (data.resultCode === 10) {
-      dispatch(makeCapture());
-    }
+
     if (data.resultCode === 0) {
       dispatch(makelogin());
     } else {
+      if (data.resultCode === 10) {
+        dispatch(getCaptureURL());
+      }
       let message =
         data.messages.length > 0 ? data.messages[0] : 'Email or pass is wrong';
       dispatch(stopSubmit('login', { _error: message }));
@@ -81,9 +72,9 @@ export const logout = () => {
     }
   };
 };
-export const capture = () => {
+export const getCaptureURL = () => {
   return async (dispatch) => {
-    let url = await AuthAPI.security();
+    let url = await securityAPI.getCaptchaURL();
     dispatch(setCaptureUrl(url));
   };
 };
