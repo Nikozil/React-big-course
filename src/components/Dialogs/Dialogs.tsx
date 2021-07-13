@@ -9,9 +9,19 @@ import {
 import DialogItem from './DialogItem/DialogItem';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';
+import { DialogType, MessagesType } from '../../Redax/messages-reduse';
 
-const Dialogs = (props) => {
-  let sendMessage = (message) => {
+type DialogsPropsType = {
+  message: string;
+
+  dialogs: Array<DialogType>;
+  messages: Array<MessagesType>;
+
+  sendMessage: (message: string) => void;
+};
+
+const Dialogs: React.FC<DialogsPropsType> = (props) => {
+  let sendMessage = (message: string) => {
     console.log(message);
     props.sendMessage(message);
   };
@@ -37,7 +47,12 @@ const Dialogs = (props) => {
     </div>
   );
 };
-const DialogForm = (props) => {
+
+type DialogFormPropsType = {
+  sendMessage: (message: string) => void;
+};
+
+const DialogForm: React.FC<DialogFormPropsType> = (props) => {
   return (
     <div>
       <Form

@@ -3,7 +3,12 @@ import { NavLink } from 'react-router-dom';
 import s from './Header.module.css';
 import Logo from '../../assets/images/logo_200x200.png';
 
-const Header = ({ logout, isAuth, login }) => {
+export type PropsType = {
+  isAuth: boolean;
+  logout: () => void;
+  login: null | string;
+};
+const Header: React.FC<PropsType> = ({ logout, isAuth, login }) => {
   return (
     <header className={s.header}>
       <img src={Logo} alt="" />

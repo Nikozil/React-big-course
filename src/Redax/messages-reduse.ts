@@ -1,11 +1,11 @@
 const SEND_MESSAGE = 'learningReact/messages/SEND-MESSAGE';
 
-type DialogType = {
+export type DialogType = {
   id: number;
   name: string;
   ava: string;
 };
-type MessagesType = {
+export type MessagesType = {
   id: number;
   message: string;
 };

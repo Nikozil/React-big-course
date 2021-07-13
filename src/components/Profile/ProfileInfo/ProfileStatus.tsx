@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { ChangeEvent, KeyboardEvent } from 'react';
 
-class ProfileStatus extends React.Component {
+type PropsType = {
+  status: string;
+  updateUserStatus: (newStatus: string) => void;
+};
+type StateType = {
+  editMode: boolean;
+  status: string;
+};
+
+class ProfileStatus extends React.Component<PropsType, StateType> {
   state = {
     editMode: false,
     status: this.props.status,
   };
-  Enter = (e) => {
+  Enter = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       this.deactivateEditMode();
     }
   };
-  onStatusChange = (e) => {
+  onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
     let text = e.currentTarget.value;
     this.setState({ status: text });
   };
@@ -26,7 +35,7 @@ class ProfileStatus extends React.Component {
     });
     this.props.updateUserStatus(this.state.status);
   };
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: PropsType, prevState: StateType) {
     if (prevProps.status !== this.props.status) {
       this.setState({ status: this.props.status });
     }
