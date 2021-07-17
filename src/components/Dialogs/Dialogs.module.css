@@ -37,3 +37,8 @@
   color: rgb(216, 44, 44);
   text-align: right;
 }
+
+.addMessage textarea {
+  height: 50px;
+  width: 800px;
+}

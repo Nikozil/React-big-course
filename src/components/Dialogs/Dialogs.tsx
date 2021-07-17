@@ -65,7 +65,7 @@ const DialogForm: React.FC<DialogFormPropsType> = (props) => {
               <Field
                 name="message"
                 validate={composeValidators(required, maxLengthCreator(100))}
-                component={TextArea}
+                component="textarea"
                 type="text"
                 placeholder="Enter your message"></Field>
             </div>

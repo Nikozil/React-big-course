@@ -1,4 +1,6 @@
+import { ThunkAction } from 'redux-thunk';
 import { makelogin } from './auth-reduser';
+import { AppStateType } from './redux-store';
 
 const SET_INITIALIZED = 'learningReact/app/SET_INITIALIZED';
 
@@ -12,7 +14,7 @@ let initialState: InitialStateType = {
 
 const appReducer = (
   state: InitialStateType = initialState,
-  action: any
+  action: initializedSucessedActionType
 ): InitialStateType => {
   switch (action.type) {
     case SET_INITIALIZED:
@@ -34,8 +36,13 @@ export const initializedSucessed = (): initializedSucessedActionType => ({
   type: SET_INITIALIZED,
 });
 
-export const initializeAPP = () => {
-  return (dispatch: any) => {
+export const initializeAPP = (): ThunkAction<
+  void,
+  AppStateType,
+  unknown,
+  initializedSucessedActionType
+> => {
+  return (dispatch) => {
     let promise = dispatch(makelogin());
 
     Promise.all([promise]).then(() => {
