@@ -2,15 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { AppStateType } from '../../Redax/redux-store';
-import {
-  acceptfollow,
-  setCurrentPage,
-  acceptunfollow,
-  toggleFollowingInProgress,
-  requestUsers,
-  follow,
-  unfollow,
-} from '../../Redax/users-reduser';
+import { requestUsers, follow, unfollow } from '../../Redax/users-reduser';
 import {
   getUsers,
   getPageSize,

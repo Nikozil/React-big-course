@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setUserData, logout } from '../../Redax/auth-reduser';
+import { logout } from '../../Redax/auth-reduser';
 import { AppStateType } from '../../Redax/redux-store';
 import Header, { PropsType } from './Header';
 

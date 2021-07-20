@@ -1,23 +1,19 @@
 import { ThunkAction } from 'redux-thunk';
 import { makelogin } from './auth-reduser';
-import { AppStateType } from './redux-store';
+import { AppStateType, InferActionsTypes } from './redux-store';
 
-const SET_INITIALIZED = 'learningReact/app/SET_INITIALIZED';
-
-export type InitialStateType = {
-  initialized: boolean;
-};
-
-let initialState: InitialStateType = {
+let initialState = {
   initialized: false,
 };
 
+export type InitialStateType = typeof initialState;
+
 const appReducer = (
   state: InitialStateType = initialState,
-  action: initializedSucessedActionType
+  action: ActionsTypes
 ): InitialStateType => {
   switch (action.type) {
-    case SET_INITIALIZED:
+    case 'learningReact/app/SET_INITIALIZED':
       return {
         ...state,
         initialized: true,
@@ -28,25 +24,25 @@ const appReducer = (
   }
 };
 
-type initializedSucessedActionType = {
-  type: typeof SET_INITIALIZED;
+type ActionsTypes = InferActionsTypes<typeof actions>;
+const actions = {
+  initializedSucessed: () =>
+    ({
+      type: 'learningReact/app/SET_INITIALIZED',
+    } as const),
 };
-
-export const initializedSucessed = (): initializedSucessedActionType => ({
-  type: SET_INITIALIZED,
-});
 
 export const initializeAPP = (): ThunkAction<
   void,
   AppStateType,
   unknown,
-  initializedSucessedActionType
+  ActionsTypes
 > => {
   return (dispatch) => {
     let promise = dispatch(makelogin());
 
     Promise.all([promise]).then(() => {
-      dispatch(initializedSucessed());
+      dispatch(actions.initializedSucessed());
     });
   };
 };

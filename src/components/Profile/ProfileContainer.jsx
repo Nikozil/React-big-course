@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import Profile from './Profile';
 import { connect } from 'react-redux';
 import {
-  setUsersProfile,
+  actions,
   getUsersProfile,
   getUserStatus,
   updateUserStatus,
@@ -58,7 +58,7 @@ let mapStateToProps = (state) => {
 
 export default compose(
   connect(mapStateToProps, {
-    setUsersProfile,
+    setUsersProfile: actions.setUsersProfile,
     getUsersProfile,
     getUserStatus,
     updateUserStatus,

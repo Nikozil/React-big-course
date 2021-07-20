@@ -1,7 +1,4 @@
-import profileReducer, {
-  addPostActionCreator,
-  deletePost,
-} from './profile-reduser';
+import profileReducer, { actions } from './profile-reduser';
 //1. test data
 let state = {
   posts: [
@@ -9,10 +6,13 @@ let state = {
     { id: 2, message: "It's my first", likesCount: 3 },
     { id: 3, message: 'olololo', likesCount: 20 },
   ],
+  profile: null,
+  status: null,
+  newPostText: '',
 };
 
 test('length of post should be incremented', () => {
-  let action = addPostActionCreator('hello');
+  let action = actions.addPostActionCreator('hello');
 
   //2. action
   let newState = profileReducer(state, action);
@@ -20,7 +20,7 @@ test('length of post should be incremented', () => {
   expect(newState.posts.length).toBe(4);
 });
 test('message of new post should be corrected ', () => {
-  let action = addPostActionCreator('hello');
+  let action = actions.addPostActionCreator('hello');
 
   //2. action
   let newState = profileReducer(state, action);
@@ -28,7 +28,7 @@ test('message of new post should be corrected ', () => {
   expect(newState.posts[3].message).toBe('hello');
 });
 test('after deleting length of messages sould be decrement', () => {
-  let action = deletePost(1);
+  let action = actions.deletePost(1);
 
   //2. action
   let newState = profileReducer(state, action);
@@ -36,7 +36,7 @@ test('after deleting length of messages sould be decrement', () => {
   expect(newState.posts.length).toBe(2);
 });
 test('after deleting length of messages sould not be decrement, if id incorrect', () => {
-  let action = deletePost(10000);
+  let action = actions.deletePost(10000);
 
   //2. action
   let newState = profileReducer(state, action);

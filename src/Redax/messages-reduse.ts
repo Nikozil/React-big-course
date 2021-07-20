@@ -1,4 +1,4 @@
-const SEND_MESSAGE = 'learningReact/messages/SEND-MESSAGE';
+import { InferActionsTypes } from './redux-store';
 
 export type DialogType = {
   id: number;
@@ -40,14 +40,12 @@ let initialState = {
   ] as Array<MessagesType>,
 };
 
-export type initialStateType = typeof initialState;
-
 const messagesReducer = (
   state: initialStateType = initialState,
-  action: sendMessageCreatorActionType
+  action: ActionsTypes
 ): initialStateType => {
   switch (action.type) {
-    case SEND_MESSAGE: {
+    case 'learningReact/messages/SEND-MESSAGE': {
       let newBody = {
         id: 7,
         message: action.newMessageBody,
@@ -65,14 +63,13 @@ const messagesReducer = (
 
 export default messagesReducer;
 
-type sendMessageCreatorActionType = {
-  type: typeof SEND_MESSAGE;
-  newMessageBody: string;
-};
+export type initialStateType = typeof initialState;
 
-export const sendMessageCreator = (
-  text: string
-): sendMessageCreatorActionType => ({
-  type: SEND_MESSAGE,
-  newMessageBody: text,
-});
+type ActionsTypes = InferActionsTypes<typeof actions>;
+export const actions = {
+  sendMessageCreator: (text: string) =>
+    ({
+      type: 'learningReact/messages/SEND-MESSAGE',
+      newMessageBody: text,
+    } as const),
+};
