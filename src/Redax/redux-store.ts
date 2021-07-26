@@ -28,10 +28,13 @@ type RootReducerType = typeof rootReducer; // (globalstate:GLOBALSTATE)=>GLOBALS
 // let store = createStore(reducers, applyMiddleware(thunkMiddleware));
 export type AppStateType = ReturnType<RootReducerType>;
 
-type PropertiesTipes<T> = T extends { [key: string]: infer U } ? U : never;
-export type InferActionsTypes<
-  T extends { [key: string]: (...args: any[]) => any }
-> = ReturnType<PropertiesTipes<T>>;
+//type PropertiesTipes<T> = T extends { [key: string]: infer U } ? U : never;
+
+export type InferActionsTypes<T> = T extends {
+  [key: string]: (...args: any[]) => infer U;
+}
+  ? U
+  : never;
 
 export type BaseThunkType<A extends Action, R = Promise<void>> = ThunkAction<
   R,

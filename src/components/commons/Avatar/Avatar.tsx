@@ -1,8 +1,8 @@
 import userPhoto from '../../../assets/images/images.png';
-import { UserType } from '../../../types/Types';
+import { ProfileType, UserType } from '../../../types/Types';
 
 type PropsType = {
-  owner: UserType;
+  owner: ProfileType | UserType;
   size: 'large' | 'small';
   className: string;
 };

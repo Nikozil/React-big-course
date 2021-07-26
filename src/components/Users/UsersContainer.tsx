@@ -1,15 +1,14 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { AppStateType } from '../../Redax/redux-store';
-import { requestUsers, follow, unfollow } from '../../Redax/users-reduser';
+import { follow, requestUsers, unfollow } from '../../Redax/users-reduser';
 import {
-  getUsers,
+  getCurrentPage,
+  getFollowingInProgress,
+  getIsFetching,
   getPageSize,
   getTotalUsersCount,
-  getCurrentPage,
-  getIsFetching,
-  getFollowingInProgress,
+  getUsers,
 } from '../../Redax/users-selectors';
 import { UserType } from '../../types/Types';
 import UsersAPIComponent from './UsersAPIComponent';

@@ -1,7 +1,6 @@
 import React from 'react';
-import Users from './Users';
 import Preloader from '../../assets/Preloaders/Preloader';
-import { UserType } from '../../types/Types';
+import Users from './Users';
 import {
   MapDispatchPropsType,
   MapStatePropsType,

@@ -1,16 +1,21 @@
 import React from 'react';
 import { Field, Form } from 'react-final-form';
+import { PostType } from '../../../types/Types';
 import {
+  composeValidators,
   maxLengthCreator,
   required,
-  composeValidators,
 } from '../../../utils/validators/validates';
-import { TextArea } from '../../commons/FormControls/FormsControls';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
-const MyPosts = React.memo((props) => {
-  let addPost = (text) => {
+type MyPostsType = {
+  addPost: (text: string) => void;
+  postsData: Array<PostType>;
+};
+
+const MyPosts: React.FC<MyPostsType> = React.memo((props) => {
+  let addPost = (text: string) => {
     props.addPost(text);
   };
 
@@ -21,13 +26,22 @@ const MyPosts = React.memo((props) => {
         <MyPostsForm addPost={addPost} />
       </div>
       {props.postsData.map((i) => (
-        <Post message={i.message} key={i.id} likesCount={i.likesCount} />
+        <Post
+          message={i.message}
+          id={i.id}
+          likesCount={i.likesCount}
+          key={i.id}
+        />
       ))}
     </div>
   );
 });
 
-const MyPostsForm = (props) => {
+type PropsType = {
+  addPost: (post: string) => void;
+};
+
+const MyPostsForm: React.FC<PropsType> = (props) => {
   return (
     <Form
       onSubmit={(postData) => {
@@ -40,7 +54,7 @@ const MyPostsForm = (props) => {
               <Field
                 validate={composeValidators(required, maxLengthCreator(30))}
                 name="post"
-                component={TextArea}
+                component="textarea"
                 type="text"
                 placeholder="Enter your post"></Field>
             </div>

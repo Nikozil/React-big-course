@@ -65,7 +65,7 @@ export default messagesReducer;
 
 export type initialStateType = typeof initialState;
 
-type ActionsTypes = InferActionsTypes<typeof actions>;
+export type ActionsTypes = InferActionsTypes<typeof actions>;
 export const actions = {
   sendMessageCreator: (text: string) =>
     ({

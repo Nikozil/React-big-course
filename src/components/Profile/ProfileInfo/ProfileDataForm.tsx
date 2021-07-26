@@ -1,33 +1,60 @@
 import React from 'react';
-import { reduxForm } from 'redux-form';
+import { InjectedFormProps, reduxForm } from 'redux-form';
 import s from './ProfileInfo.module.css';
 import FC from '../../commons/FormControls/FormsControls.module.css';
 
 import {
   CreateField,
+  GetStringKeys,
   InputArea,
   TextArea,
 } from '../../commons/FormControls/FormsControls';
-const ProfileDataForm = ({ handleSubmit, profile, error }) => {
+import { ProfileType } from '../../../types/Types';
+
+type PropsType = {
+  profile: ProfileType;
+};
+type ProfileTypeKeys = GetStringKeys<ProfileType>;
+const ProfileDataForm: React.FC<
+  InjectedFormProps<ProfileType, PropsType> & PropsType
+> = ({ handleSubmit, profile, error }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <b>Имя: </b>
-        {CreateField('Полное имя', 'fullName', [], InputArea, 'text')}
+        {CreateField<ProfileTypeKeys>(
+          'Полное имя',
+          'fullName',
+          [],
+          InputArea,
+          'text'
+        )}
       </div>
       <div>
         <b>Обо мне: </b>
-        {CreateField('Обо мне', 'aboutMe', [], TextArea, 'text')}
+        {CreateField<ProfileTypeKeys>(
+          'Обо мне',
+          'aboutMe',
+          [],
+          TextArea,
+          'text'
+        )}
       </div>
       <div>
         <b> Работа</b>
         <div>
           <b>Ищу работу: </b>
-          {CreateField('', 'lookingForAJob', [], InputArea, 'checkbox')}
+          {CreateField<ProfileTypeKeys>(
+            '',
+            'lookingForAJob',
+            [],
+            InputArea,
+            'checkbox'
+          )}
         </div>
         <div>
           <b>Мои навыки: </b>
-          {CreateField(
+          {CreateField<ProfileTypeKeys>(
             'Мои навыки',
             'lookingForAJobDescription',
             [],
@@ -57,7 +84,7 @@ const ProfileDataForm = ({ handleSubmit, profile, error }) => {
   );
 };
 
-const ProfileDataReduxFrom = reduxForm({
+const ProfileDataReduxFrom = reduxForm<ProfileType, PropsType>({
   // a unique name for the form
   form: 'profileData',
 })(ProfileDataForm);

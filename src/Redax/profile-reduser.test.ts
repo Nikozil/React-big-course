@@ -1,13 +1,14 @@
-import profileReducer, { actions } from './profile-reduser';
+import profileReducer, { actions, InitialStateType } from './profile-reduser';
+import { AppStateType } from './redux-store';
 //1. test data
-let state = {
+let state: InitialStateType = {
   posts: [
     { id: 1, message: 'Hi, how are your?', likesCount: 2 },
     { id: 2, message: "It's my first", likesCount: 3 },
     { id: 3, message: 'olololo', likesCount: 20 },
   ],
   profile: null,
-  status: null,
+  status: '',
   newPostText: '',
 };
 

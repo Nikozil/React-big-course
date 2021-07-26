@@ -1,34 +1,51 @@
-import React, { Suspense } from 'react';
-import { connect } from 'react-redux';
-import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
+import React from 'react';
+import { connect, Provider } from 'react-redux';
+import {
+  BrowserRouter,
+  Redirect,
+  Route,
+  Switch,
+  withRouter,
+} from 'react-router-dom';
+import { compose } from 'redux';
+import Preloader from './assets/Preloaders/Preloader';
+import { initializeAPP } from './Redax/app-reducer';
+import { makelogin } from './Redax/auth-reduser';
 import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
 import Music from './components/Music/Music';
 import Navbar from './components/Navbar/Navbar';
 import News from './components/News/News';
-
 import Settings from './components/Settings/Settings';
 import UsersContainer from './components/Users/UsersContainer';
-import { makelogin } from '../src/Redax/auth-reduser';
-import { compose } from 'redux';
-import { initializeAPP } from '../src/Redax/app-reducer';
-import Preloader from '../src/assets/Preloaders/Preloader';
-import store from './Redax/redux-store';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { withSuspense } from './hoc/withSuspense';
+import store, { AppStateType } from './Redax/redux-store';
 
-const DialogsContainer = React.lazy(() =>
-  import('./components/Dialogs/DialogsContainer')
+const DialogsContainer = React.lazy(
+  () => import('./components/Dialogs/DialogsContainer')
 );
-const ProfileContainer = React.lazy(() =>
-  import('./components/Profile/ProfileContainer')
+const ProfileContainer = React.lazy(
+  () => import('./components/Profile/ProfileContainer')
 );
 // import DialogsContainer from './components/Dialogs/DialogsContainer';
 // import ProfileContainer from './components/Profile/ProfileContainer';
-class App extends React.Component {
-  catchAllUnhandledErrors = (promiseRejectionEvent) => {
+
+const SuspendedDialog = withSuspense(DialogsContainer);
+const SuspendedProfile = withSuspense(ProfileContainer);
+
+type mapStateToPropsType = {
+  initialized: boolean;
+};
+type mapDispatchToPropsType = {
+  initializeAPP: () => void;
+  makelogin: () => void;
+};
+
+class App extends React.Component<
+  mapStateToPropsType & mapDispatchToPropsType
+> {
+  catchAllUnhandledErrors = (promiseRejectionEvent: PromiseRejectionEvent) => {
     alert('Some error occured');
     console.log(promiseRejectionEvent);
   };
@@ -37,7 +54,10 @@ class App extends React.Component {
     window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors);
   }
   componentWillUnmount() {
-    window.removeEventListener('unhandledrejection', this.catchAllUnhandledEr);
+    window.removeEventListener(
+      'unhandledrejection',
+      this.catchAllUnhandledErrors
+    );
   }
   render() {
     if (!this.props.initialized) {
@@ -55,10 +75,10 @@ class App extends React.Component {
         <Navbar />
         <div className="app-wrapper-content">
           <Switch>
-            <Route path="/dialogs" render={withSuspense(DialogsContainer)} />
+            <Route path="/dialogs" render={() => <SuspendedDialog />} />
             <Route
               path="/profile/:userId?"
-              render={withSuspense(ProfileContainer)}
+              render={() => <SuspendedProfile />}
             />
             <Route exact path="/" render={() => <Redirect to={'/profile'} />} />
 
@@ -83,16 +103,21 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
   initialized: state.app.initialized,
 });
-
-let AppContainer = compose(
+type ownPropsType = {};
+let AppContainer = compose<React.ComponentType>(
   withRouter,
-  connect(mapStateToProps, { makelogin, initializeAPP })
+  connect<
+    mapStateToPropsType,
+    mapDispatchToPropsType,
+    ownPropsType,
+    AppStateType
+  >(mapStateToProps, { makelogin, initializeAPP })
 )(App);
 
-const MainApp = (props) => (
+const MainApp: React.FC = () => (
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>

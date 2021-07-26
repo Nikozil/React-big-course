@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, Form } from 'react-final-form';
-import { TextArea } from '../commons/FormControls/FormsControls';
+import { DialogType, MessagesType } from '../../Redax/messages-reduse';
 import {
   composeValidators,
   maxLengthCreator,
@@ -9,7 +9,6 @@ import {
 import DialogItem from './DialogItem/DialogItem';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';
-import { DialogType, MessagesType } from '../../Redax/messages-reduse';
 
 type DialogsPropsType = {
   message: string;
@@ -22,7 +21,6 @@ type DialogsPropsType = {
 
 const Dialogs: React.FC<DialogsPropsType> = (props) => {
   let sendMessage = (message: string) => {
-    console.log(message);
     props.sendMessage(message);
   };
 

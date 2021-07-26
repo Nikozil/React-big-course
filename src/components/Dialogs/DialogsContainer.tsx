@@ -1,7 +1,13 @@
+import React from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
-import { DialogType, MessagesType, actions } from '../../Redax/messages-reduse';
+import {
+  DialogType,
+  MessagesType,
+  actions,
+  ActionsTypes,
+} from '../../Redax/messages-reduse';
 import { AppStateType } from '../../Redax/redux-store';
 import Dialogs from './Dialogs';
 
@@ -21,10 +27,11 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     dialogs: state.messagesPage.dialogs,
     messages: state.messagesPage.messages,
-    // newMessageBody: state.messagesPage.newMessageBody,
   };
 };
-let mapDispatchToProps = (dispatch: any): MapDispatchPropsType => {
+let mapDispatchToProps = (
+  dispatch: Dispatch<ActionsTypes>
+): MapDispatchPropsType => {
   return {
     sendMessage: (text) => {
       dispatch(actions.sendMessageCreator(text));
@@ -32,7 +39,7 @@ let mapDispatchToProps = (dispatch: any): MapDispatchPropsType => {
   };
 };
 
-export default compose(
+export default compose<React.ComponentType>(
   connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(
     mapStateToProps,
     mapDispatchToProps

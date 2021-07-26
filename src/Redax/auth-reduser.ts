@@ -1,9 +1,8 @@
-import { FormAction, stopSubmit, StopSubmitAction } from 'redux-form';
-import { ThunkAction } from 'redux-thunk';
+import { FormAction, stopSubmit } from 'redux-form';
 import { ResultCodeEnum, ResultCodeForCaptcha } from '../api/api';
-import { securityAPI } from '../api/security-api';
 import { AuthAPI } from '../api/auth-api';
-import { AppStateType, BaseThunkType, InferActionsTypes } from './redux-store';
+import { securityAPI } from '../api/security-api';
+import { BaseThunkType, InferActionsTypes } from './redux-store';
 
 let initialState = {
   userId: null as null | number,

@@ -1,10 +1,8 @@
-import { type } from 'os';
 import { FormAction, stopSubmit } from 'redux-form';
-import { ThunkAction } from 'redux-thunk';
 import { ResultCodeEnum } from '../api/api';
 import { ProfileAPI } from '../api/profile-api';
 import { PhotosType, PostType, ProfileType } from '../types/Types';
-import { AppStateType, BaseThunkType, InferActionsTypes } from './redux-store';
+import { BaseThunkType, InferActionsTypes } from './redux-store';
 
 let initialState = {
   posts: [
@@ -13,7 +11,7 @@ let initialState = {
     { id: 3, message: 'olololo', likesCount: 20 },
   ] as Array<PostType>,
   profile: null as null | ProfileType,
-  status: null as null | string,
+  status: '' as string,
   newPostText: '',
 };
 
@@ -63,7 +61,7 @@ const profileReducer = (
 
 export default profileReducer;
 
-type ActionsTypes = InferActionsTypes<typeof actions>;
+export type ActionsTypes = InferActionsTypes<typeof actions>;
 export const actions = {
   addPostActionCreator: (text: string) =>
     ({

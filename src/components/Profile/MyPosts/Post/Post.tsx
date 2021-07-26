@@ -1,7 +1,8 @@
 import React from 'react';
+import { PostType } from '../../../../types/Types';
 import s from './Post.module.css';
 
-const Post = (props) => {
+const Post: React.FC<PostType> = (props) => {
   return (
     <div className={s.post}>
       <div className={s.item}>

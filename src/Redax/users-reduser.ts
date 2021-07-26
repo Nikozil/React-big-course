@@ -2,7 +2,7 @@ import { Dispatch } from 'react';
 import { ThunkAction } from 'redux-thunk';
 import { ResultCodeEnum } from '../api/api';
 import { UsersAPI } from '../api/users-api';
-import { PhotosType, UserType } from '../types/Types';
+import { UserType } from '../types/Types';
 import { updateObjectInArray } from '../utils/objects-helpers';
 import { AppStateType, InferActionsTypes } from './redux-store';
 

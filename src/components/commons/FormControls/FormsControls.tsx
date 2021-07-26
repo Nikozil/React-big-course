@@ -1,9 +1,8 @@
 import React from 'react';
 import { Field, WrappedFieldProps } from 'redux-form';
-import { PropsType } from '../../Header/Header';
 import { FieldValidatorType } from '../../utils/validators/validates';
-
 import s from './FormsControls.module.css';
+
 export const TextArea: React.FC<WrappedFieldProps> = (props) => {
   const { input, meta, ...restProps } = props;
   return (
@@ -21,11 +20,11 @@ export const InputArea: React.FC<WrappedFieldProps> = (props) => {
   );
 };
 
-type FormControlPropsType = {
-  input: any;
-  meta: WrappedFieldProps;
-  // children: React.ReactNode;
-};
+// type FormControlPropsType = {
+//   input: any;
+//   meta: WrappedFieldProps;
+//   // children: React.ReactNode;
+// };
 
 const FormControl: React.FC<WrappedFieldProps> = ({
   input,
@@ -39,7 +38,7 @@ const FormControl: React.FC<WrappedFieldProps> = ({
     </div>
   );
 };
-
+export type GetStringKeys<T> = Extract<keyof T, string>;
 export function CreateField<FormKeysType extends string>(
   placeholder: string | undefined,
   name: FormKeysType,

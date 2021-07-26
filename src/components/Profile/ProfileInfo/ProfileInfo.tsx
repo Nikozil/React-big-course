@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import s from './ProfileInfo.module.css';
 import Preloader from '../../../assets/Preloaders/Preloader';
 import ProfileStatusWithHooks from './ProfileStatusWithHooks';
 import Avatar from '../../commons/Avatar/Avatar';
 import ProfileDataForm from './ProfileDataForm';
+import { ContactsType, ProfileType } from '../../../types/Types';
 
-const ProfileInfo = ({
+type PropsType = {
+  profile: ProfileType | null;
+  status: string;
+  isOwner: boolean;
+  updateUserStatus: (status: string) => void;
+  savePhoto: (photo: File) => void;
+  saveProfile: (profile: ProfileType) => Promise<void>;
+};
+
+const ProfileInfo: React.FC<PropsType> = ({
   profile,
   status,
   updateUserStatus,
@@ -18,7 +28,7 @@ const ProfileInfo = ({
     return <Preloader />;
   }
 
-  const onSubmit = (formData) => {
+  const onSubmit = (formData: ProfileType) => {
     saveProfile(formData).then(() => {
       setEditMode(false);
     });
@@ -58,7 +68,17 @@ const ProfileInfo = ({
     </div>
   );
 };
-const ProfileData = ({ profile, isOwner, goToEditMode }) => {
+
+type ProfileDataType = {
+  profile: ProfileType;
+  isOwner: boolean;
+  goToEditMode: () => void;
+};
+const ProfileData: React.FC<ProfileDataType> = ({
+  profile,
+  isOwner,
+  goToEditMode,
+}) => {
   return (
     <>
       <div>
@@ -90,7 +110,7 @@ const ProfileData = ({ profile, isOwner, goToEditMode }) => {
               <Contact
                 key={key}
                 contactTitle={key}
-                contactValue={profile.contacts[key]}
+                contactValue={profile.contacts[key as keyof ContactsType]}
               />
             );
           })}
@@ -101,7 +121,12 @@ const ProfileData = ({ profile, isOwner, goToEditMode }) => {
   );
 };
 
-const Contact = ({ contactTitle, contactValue }) => {
+type ContactType = {
+  contactTitle: string;
+  contactValue: string;
+};
+
+const Contact: React.FC<ContactType> = ({ contactTitle, contactValue }) => {
   return (
     <div>
       <b>{contactTitle}</b>: <a href={contactValue}>{contactValue}</a>
@@ -109,9 +134,18 @@ const Contact = ({ contactTitle, contactValue }) => {
   );
 };
 
-const MainPageAvatar = ({ profile, isOwner, savePhoto }) => {
-  const onMainPhotoSelected = (e) => {
-    if (e.target.files.length) {
+type MainPageAvatarType = {
+  profile: ProfileType;
+  isOwner: boolean;
+  savePhoto: (photo: File) => void;
+};
+const MainPageAvatar: React.FC<MainPageAvatarType> = ({
+  profile,
+  isOwner,
+  savePhoto,
+}) => {
+  const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
       savePhoto(e.target.files[0]);
     }
   };
