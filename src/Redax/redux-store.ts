@@ -5,11 +5,11 @@ import {
   compose,
   Action,
 } from 'redux';
-import authReducer from './auth-reduser';
-import messagesReducer from './messages-reduse';
-import profileReducer from './profile-reduser';
-import sidebarReducer from './sidebar-reduser';
-import usersReducer from './users-reduser';
+import authReducer from './auth-reducer';
+import messagesReducer from './messages-reducer';
+import profileReducer from './profile-reducer';
+import sidebarReducer from './sidebar-reducer';
+import usersReducer from './users-reducer';
 import thunkMiddleware, { ThunkAction } from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 import appReducer from './app-reducer';

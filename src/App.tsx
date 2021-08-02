@@ -10,7 +10,7 @@ import {
 import { compose } from 'redux';
 import Preloader from './assets/Preloaders/Preloader';
 import { initializeAPP } from './Redax/app-reducer';
-import { makelogin } from './Redax/auth-reduser';
+import { makelogin } from './Redax/auth-reducer';
 import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';

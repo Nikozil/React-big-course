@@ -1,6 +1,6 @@
 import * as axios from 'axios';
 import React from 'react';
-import { unfollowAC } from '../../Redax/users-reduser';
+import { unfollowAC } from '../../Redax/users-reducer';
 import s from './Users.module.css';
 import userPhoto from '../../assets/images/images.png';
 

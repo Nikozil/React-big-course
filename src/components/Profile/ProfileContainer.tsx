@@ -11,7 +11,7 @@ import {
   savePhoto,
   saveProfile,
   updateUserStatus,
-} from '../../Redax/profile-reduser';
+} from '../../Redax/profile-reducer';
 import { AppStateType } from '../../Redax/redux-store';
 import { ProfileType } from '../../types/Types';
 import Profile from './Profile';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, Form } from 'react-final-form';
-import { DialogType, MessagesType } from '../../Redax/messages-reduse';
+import { DialogType, MessagesType } from '../../Redax/messages-reducer';
 import {
   composeValidators,
   maxLengthCreator,

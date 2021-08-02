@@ -7,7 +7,7 @@ import {
   MessagesType,
   actions,
   ActionsTypes,
-} from '../../Redax/messages-reduse';
+} from '../../Redax/messages-reducer';
 import { AppStateType } from '../../Redax/redux-store';
 import Dialogs from './Dialogs';
 

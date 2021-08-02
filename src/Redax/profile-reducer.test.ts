@@ -1,4 +1,4 @@
-import profileReducer, { actions, InitialStateType } from './profile-reduser';
+import profileReducer, { actions, InitialStateType } from './profile-reducer';
 import { AppStateType } from './redux-store';
 //1. test data
 let state: InitialStateType = {
