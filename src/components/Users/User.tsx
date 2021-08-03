@@ -19,6 +19,8 @@ const User: React.FC<PropsType> = ({
 }) => {
   return (
     <div>
+      <hr />
+
       <span>
         <div>
           <NavLink to={`/profile/${user.id}`}>
@@ -46,8 +48,8 @@ const User: React.FC<PropsType> = ({
         </div>
       </span>
       <span>
-        <div>{user.name}</div>
-        <div>{user.status}</div>
+        <div>Name: {user.name}</div>
+        <div>Status: {user.status}</div>
       </span>
     </div>
   );

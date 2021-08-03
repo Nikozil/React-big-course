@@ -1,9 +1,15 @@
+import { FilterType } from '../Redax/users-reducer';
 import { instance, UsersAPIType, SuccessRequestType } from './api';
 
 export const UsersAPI = {
-  async getUsers(currentPage: number = 1, pageSize: number = 10) {
+  async getUsers(
+    currentPage: number = 1,
+    pageSize: number = 10,
+    filter: FilterType = { term: '', friend: null }
+  ) {
     let response = await instance.get<UsersAPIType>(
-      `users?page=${currentPage}&count=${pageSize}`
+      `users?page=${currentPage}&count=${pageSize}&term=${filter.term}` +
+        (filter.friend === null ? '' : `&friend=${filter.friend}`)
     );
     return response.data;
   },

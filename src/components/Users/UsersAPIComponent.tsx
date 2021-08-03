@@ -1,5 +1,6 @@
 import React from 'react';
 import Preloader from '../../assets/Preloaders/Preloader';
+import { FilterType } from '../../Redax/users-reducer';
 import Users from './Users';
 import {
   MapDispatchPropsType,
@@ -28,12 +29,17 @@ type UsersAPIPropsType = MapStatePropsType &
 
 class UsersAPIComponent extends React.Component<UsersAPIPropsType> {
   componentDidMount() {
-    const { currentPage, pageSize } = this.props;
-    this.props.requestUsers(currentPage, pageSize);
+    const { currentPage, pageSize, filter } = this.props;
+    this.props.requestUsers(currentPage, pageSize, filter);
   }
   onPageChanged = (p: number) => {
+    const { pageSize, filter } = this.props;
+    this.props.requestUsers(p, pageSize, filter);
+  };
+  onFilterChanged = (filter: FilterType) => {
     const { pageSize } = this.props;
-    this.props.requestUsers(p, pageSize);
+
+    this.props.requestUsers(1, pageSize, filter);
   };
 
   render() {
@@ -47,6 +53,7 @@ class UsersAPIComponent extends React.Component<UsersAPIPropsType> {
             totalUsersCount={this.props.totalUsersCount}
             pageSize={this.props.pageSize}
             onPageChanged={this.onPageChanged}
+            onFilterChanged={this.onFilterChanged}
             currentPage={this.props.currentPage}
             users={this.props.users}
             unfollow={this.props.unfollow}

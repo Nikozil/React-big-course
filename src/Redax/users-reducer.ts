@@ -13,8 +13,13 @@ let initialState = {
   currentPage: 1,
   isFetching: false,
   followingInProgress: [] as Array<number>, //array of users ids
+  filter: {
+    term: '',
+    friend: null as null | boolean,
+  },
 };
 export type initialStateType = typeof initialState;
+export type FilterType = typeof initialState.filter;
 
 export const usersReducer = (
   state: initialStateType = initialState,
@@ -62,6 +67,11 @@ export const usersReducer = (
           ? [...state.followingInProgress, action.userId]
           : [...state.followingInProgress.filter((id) => id !== action.userId)],
       };
+    case 'learningReact/users/SET_Filter':
+      return {
+        ...state,
+        filter: action.payload,
+      };
     default:
       return state;
   }
@@ -105,6 +115,11 @@ export const actions = {
       userId,
       isFetching,
     } as const),
+  setFilter: (filter: FilterType) =>
+    ({
+      type: 'learningReact/users/SET_Filter',
+      payload: filter,
+    } as const),
 };
 
 type ThunkType = ThunkAction<
@@ -114,12 +129,17 @@ type ThunkType = ThunkAction<
   ActionsTypes
 >;
 
-export const requestUsers = (page: number, pageSize: number): ThunkType => {
+export const requestUsers = (
+  page: number,
+  pageSize: number,
+  filter: FilterType
+): ThunkType => {
   return async (dispatch, getState) => {
     dispatch(actions.toggleIsFetching(true));
     dispatch(actions.setCurrentPage(page));
+    dispatch(actions.setFilter(filter));
 
-    let data = await UsersAPI.getUsers(page, pageSize);
+    let data = await UsersAPI.getUsers(page, pageSize, filter);
     dispatch(actions.setUsers(data.items));
     dispatch(actions.setTotalUsersCount(data.totalCount));
     dispatch(actions.toggleIsFetching(false));

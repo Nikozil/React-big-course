@@ -1,7 +1,12 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { AppStateType } from '../../Redax/redux-store';
-import { follow, requestUsers, unfollow } from '../../Redax/users-reducer';
+import {
+  FilterType,
+  follow,
+  requestUsers,
+  unfollow,
+} from '../../Redax/users-reducer';
 import {
   getCurrentPage,
   getFollowingInProgress,
@@ -9,6 +14,7 @@ import {
   getPageSize,
   getTotalUsersCount,
   getUsers,
+  getUsersFilter,
 } from '../../Redax/users-selectors';
 import { UserType } from '../../types/Types';
 import UsersAPIComponent from './UsersAPIComponent';
@@ -21,12 +27,17 @@ export type MapStatePropsType = {
   portionSize?: number;
   users: Array<UserType>;
   followingInProgress: Array<number>;
+  filter: FilterType;
 };
 
 export type MapDispatchPropsType = {
   follow: (id: number) => void;
   unfollow: (id: number) => void;
-  requestUsers: (currentPage: number, pageSize: number) => void;
+  requestUsers: (
+    currentPage: number,
+    pageSize: number,
+    filter: FilterType
+  ) => void;
 };
 
 export type OwnPropsType = {
@@ -41,6 +52,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     currentPage: getCurrentPage(state),
     isFetching: getIsFetching(state),
     followingInProgress: getFollowingInProgress(state),
+    filter: getUsersFilter(state),
   };
 };
 
