@@ -13,12 +13,12 @@ import { initializeAPP } from './Redax/app-reducer';
 import { makelogin } from './Redax/auth-reducer';
 import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
-import Login from './components/Login/Login';
+import { Login } from './components/Login/Login';
 import Music from './components/Music/Music';
 import Navbar from './components/Navbar/Navbar';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
-import UsersContainer from './components/Users/UsersContainer';
+import UsersPage from './components/Users/UsersPage';
 import { withSuspense } from './hoc/withSuspense';
 import store, { AppStateType } from './Redax/redux-store';
 
@@ -87,7 +87,7 @@ class App extends React.Component<
             <Route path="/login" component={Login} />
             <Route
               path="/users"
-              render={() => <UsersContainer pageTitle={'Пользователи'} />}
+              render={() => <UsersPage pageTitle={'Пользователи'} />}
             />
 
             <Route path="/settings" component={Settings} />

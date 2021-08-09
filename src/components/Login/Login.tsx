@@ -1,12 +1,12 @@
 import React from 'react';
-import { InjectedFormProps, reduxForm } from 'redux-form';
-import { CreateField, InputArea } from '../commons/FormControls/FormsControls';
-import { maxLengthCreator, required } from '../../utils/validators/validates';
-import { connect } from 'react-redux';
-import { login } from '../../Redax/auth-reducer';
+import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
-import FC from '../commons/FormControls/FormsControls.module.css';
+import { InjectedFormProps, reduxForm } from 'redux-form';
+import { login } from '../../Redax/auth-reducer';
 import { AppStateType } from '../../Redax/redux-store';
+import { maxLengthCreator, required } from '../../utils/validators/validates';
+import { CreateField, InputArea } from '../commons/FormControls/FormsControls';
+import FC from '../commons/FormControls/FormsControls.module.css';
 let maxLength30 = maxLengthCreator(30);
 
 type LoginFormOwnProps = {
@@ -65,19 +65,6 @@ const LoginReduxForm = reduxForm<LoginFormValuesType, LoginFormOwnProps>({
   form: 'login',
 })(LoginForm);
 
-type MapStateToPropsType = {
-  isAuth: boolean;
-  captureUrl: string | null;
-};
-type MapDispatchToPropsType = {
-  login: (
-    email: string,
-    password: string,
-    rememberMe: boolean,
-    captcha: string
-  ) => void;
-};
-
 export type LoginFormValuesType = {
   email: string;
   password: string;
@@ -87,36 +74,34 @@ export type LoginFormValuesType = {
 
 export type LoginFormValuesKeys = Extract<keyof LoginFormValuesType, string>;
 
-const Login: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (
-  props
-) => {
-  if (props.isAuth) {
-    return <Redirect to={'/profile'} />;
-  }
+export const Login: React.FC = (props) => {
+  const captureUrl = useSelector(
+    (state: AppStateType) => state.auth.captureULR
+  );
+  const isAuth = useSelector((state: AppStateType) => state.auth.isAuth);
+  const dispatch = useDispatch();
+
   const onSubmit = (formData: any) => {
-    props.login(
-      formData.email,
-      formData.password,
-      formData.rememberMe,
-      formData.captcha
+    dispatch(
+      login(
+        formData.email,
+        formData.password,
+        formData.rememberMe,
+        formData.captcha
+      )
     );
   };
+  if (isAuth) {
+    return <Redirect to={'/profile'} />;
+  }
   return (
     <div>
       <h1>Login</h1>
       <LoginReduxForm
         // login={props.login}
-        captureUrl={props.captureUrl}
+        captureUrl={captureUrl}
         onSubmit={onSubmit}
       />
     </div>
   );
 };
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
-  return {
-    isAuth: state.auth.isAuth,
-    captureUrl: state.auth.captureULR,
-  };
-};
-
-export default connect(mapStateToProps, { login })(Login);

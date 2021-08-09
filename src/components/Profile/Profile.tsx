@@ -1,33 +1,40 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouteMatch } from 'react-router-dom';
+import {
+  savePhoto,
+  saveProfile,
+  updateUserStatus,
+} from '../../Redax/profile-reducer';
+import { AppStateType } from '../../Redax/redux-store';
 import { ProfileType } from '../../types/Types';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-type PropsType = {
-  isOwner: boolean;
-  profile: ProfileType | null;
-  status: string;
-  updateUserStatus: (status: string) => void;
-  savePhoto: (photo: File) => void;
-  saveProfile: (profile: ProfileType) => Promise<void>;
-};
-const Profile: React.FC<PropsType> = (props) => {
+
+const Profile: React.FC = () => {
+  const profile = useSelector(
+    (state: AppStateType) => state.profilePage.profile
+  );
+  const status = useSelector((state: AppStateType) => state.profilePage.status);
+  const isOwner: boolean = !useRouteMatch('/profile/:userId');
+
+  const dispatch = useDispatch();
+  const updateUserStatusHandler = (status: string) =>
+    dispatch(updateUserStatus(status));
+  const savePhotoHandler = (photo: File) => dispatch(savePhoto(photo));
+
+  const saveProfileHandler = (profile: ProfileType) =>
+    //@ts-ignore
+    dispatch(saveProfile(profile) as Promise<void>);
   return (
     <div>
-      {/* <div className={s.mainContent}>
-        Main Content
-        <br />
-        <img
-          src="https://home.bt.com/images/in-pictures-standoff-between-fox-and-marmot-wins-top-photography-prize-136440298151802601-191015231058.jpg"
-          alt=""
-        />
-      </div> */}
       <ProfileInfo
-        isOwner={props.isOwner}
-        profile={props.profile}
-        status={props.status}
-        updateUserStatus={props.updateUserStatus}
-        savePhoto={props.savePhoto}
-        saveProfile={props.saveProfile}
+        isOwner={isOwner}
+        profile={profile}
+        status={status}
+        updateUserStatus={updateUserStatusHandler}
+        savePhoto={savePhotoHandler}
+        saveProfile={saveProfileHandler}
       />
       <MyPostsContainer />
     </div>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Field, Form, Formik } from 'formik';
 import { FilterType } from '../../Redax/users-reducer';
+import { useSelector } from 'react-redux';
+import { getUsersFilter } from '../../Redax/users-selectors';
 
 const usersSearchFormValidate = (values: any) => {
   const errors = {};
@@ -10,13 +12,17 @@ const usersSearchFormValidate = (values: any) => {
 type UsersSearchFormPropsType = {
   onFilterChanged: (filter: FilterType) => void;
 };
+type FriendFormType = 'true' | 'false' | 'null';
+
 type FormType = {
   term: string;
-  friend: 'true' | 'false' | 'null';
+  friend: FriendFormType;
 };
 
 export const UsersSearchForm: React.FC<UsersSearchFormPropsType> = React.memo(
   ({ onFilterChanged }) => {
+    const filter = useSelector(getUsersFilter);
+
     const onSubmit = (
       values: FormType,
       { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
@@ -31,10 +37,16 @@ export const UsersSearchForm: React.FC<UsersSearchFormPropsType> = React.memo(
             : false,
       };
       onFilterChanged(filter);
+      setSubmitting(false);
     };
+
     return (
       <Formik
-        initialValues={{ term: '', friend: 'null' }}
+        enableReinitialize
+        initialValues={{
+          term: filter.term,
+          friend: String(filter.friend) as FriendFormType,
+        }}
         validate={usersSearchFormValidate}
         onSubmit={onSubmit}>
         {({ isSubmitting }) => (
