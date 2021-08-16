@@ -1,4 +1,4 @@
-.header {
+/* .header {
   background: green;
   grid-area: h;
 }
@@ -7,11 +7,30 @@
   border-radius: 50%;
   background: rgb(146, 50, 130);
   margin: 5px;
-}
-.loginBlock {
+} */
+/* .loginBlock {
   float: right;
   margin: 15px;
-}
+} */
 .loginBlock a {
   color: white;
 }
+.logo img {
+  height: 160px;
+  margin-top: -44px;
+}
+.login {
+  display: inline;
+  margin: 15px;
+  color: white;
+}
+
+.loginBlock {
+  float: right;
+}
+
+/* .header:global(#header1) {
+  display: inline-block;
+  text-align: center;
+  height: 160px;
+} */

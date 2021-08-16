@@ -6,8 +6,8 @@ import { BaseThunkType, InferActionsTypes } from './redux-store';
 
 let initialState = {
   posts: [
-    { id: 1, message: 'Hi, how are your?', likesCount: 2 },
-    { id: 2, message: "It's my first", likesCount: 3 },
+    { id: 1, message: 'Hi, how are you?', likesCount: 2 },
+    { id: 2, message: "It's my first post", likesCount: 3 },
     { id: 3, message: 'olololo', likesCount: 20 },
   ] as Array<PostType>,
   profile: null as null | ProfileType,

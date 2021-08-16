@@ -1,8 +1,8 @@
 import React from 'react';
-import s from './User.module.css';
 import { NavLink } from 'react-router-dom';
-import Avatar from '../commons/Avatar/Avatar';
 import { UserType } from '../../types/Types';
+import Avatar from '../commons/Avatar/Avatar';
+import s from './User.module.css';
 
 type PropsType = {
   user: UserType;
@@ -22,7 +22,7 @@ const User: React.FC<PropsType> = ({
       <hr />
 
       <span>
-        <div>
+        <div style={{ marginBottom: '10px' }}>
           <NavLink to={`/profile/${user.id}`}>
             <Avatar owner={user} size={'small'} className={s.photo} />
           </NavLink>
@@ -49,7 +49,7 @@ const User: React.FC<PropsType> = ({
       </span>
       <span>
         <div>Name: {user.name}</div>
-        <div>Status: {user.status}</div>
+        <div>Status: {user.status || '😊'}</div>
       </span>
     </div>
   );

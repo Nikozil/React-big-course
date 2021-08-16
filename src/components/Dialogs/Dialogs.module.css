@@ -13,7 +13,7 @@
 .dialogsItems .dialog a {
   margin: 3px;
   text-decoration: none;
-  color: white;
+  /* color: white; */
 }
 .dialogsItems .dialog img {
   width: 50px;
@@ -30,11 +30,11 @@
   justify-content: space-between;
 }
 .messages .message {
-  color: rgb(79, 211, 46);
+  color: rgb(18, 33, 241);
 }
 
 .messages .right {
-  color: rgb(216, 44, 44);
+  color: rgb(2, 102, 44);
   text-align: right;
 }
 

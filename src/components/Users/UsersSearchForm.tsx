@@ -1,7 +1,8 @@
-import React from 'react';
+import { SearchOutlined } from '@ant-design/icons';
 import { Field, Form, Formik } from 'formik';
-import { FilterType } from '../../Redax/users-reducer';
+import React from 'react';
 import { useSelector } from 'react-redux';
+import { FilterType } from '../../Redax/users-reducer';
 import { getUsersFilter } from '../../Redax/users-selectors';
 
 const usersSearchFormValidate = (values: any) => {
@@ -50,15 +51,19 @@ export const UsersSearchForm: React.FC<UsersSearchFormPropsType> = React.memo(
         validate={usersSearchFormValidate}
         onSubmit={onSubmit}>
         {({ isSubmitting }) => (
-          <Form>
-            <Field type="text" name="term" />
-            <Field name="friend" as="select">
+          <Form style={{ marginBottom: '10px' }}>
+            <Field type="text" name="term" style={{ marginRight: '10px' }} />
+            <Field name="friend" as="select" style={{ marginRight: '10px' }}>
               <option value="null">All</option>
               <option value="true">Only followed</option>
               <option value="false">Only unfollowed</option>
             </Field>
-            <button type="submit" disabled={isSubmitting}>
-              Find
+
+            <button
+              type="submit"
+              className="ant-btn ant-btn-primary ant-btn-circle ant-btn-icon-only"
+              disabled={isSubmitting}>
+              <SearchOutlined />
             </button>
           </Form>
         )}

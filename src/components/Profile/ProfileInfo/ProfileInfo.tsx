@@ -5,6 +5,7 @@ import ProfileStatusWithHooks from './ProfileStatusWithHooks';
 import Avatar from '../../commons/Avatar/Avatar';
 import ProfileDataForm from './ProfileDataForm';
 import { ContactsType, ProfileType } from '../../../types/Types';
+import { Button } from 'antd';
 
 type PropsType = {
   profile: ProfileType | null;
@@ -116,7 +117,13 @@ const ProfileData: React.FC<ProfileDataType> = ({
           })}
         </div>
       </div>
-      <div>{isOwner && <button onClick={goToEditMode}>edit</button>}</div>
+      <div>
+        {isOwner && (
+          <Button type="dashed" size="small" onClick={goToEditMode}>
+            Edit
+          </Button>
+        )}
+      </div>
     </>
   );
 };
