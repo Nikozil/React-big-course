@@ -1,16 +1,28 @@
 import React from 'react';
+import { MessageType } from '../../../Redax/messages-reducer';
 import s from '../Dialogs.module.css';
-
-type PropsType = {
-  id: number;
-  message: string;
-};
-
-const Message: React.FC<PropsType> = (props) => {
+import { IoMdCheckmark } from 'react-icons/io';
+const Message: React.FC<{ message: MessageType }> = ({ message }) => {
   let style = [s.message];
-
-  if (props.id % 2 === 0) style.push(s.right);
-  return <div className={style.join(' ')}>{props.message}</div>;
+  const sanitizer = require('sanitizer');
+  return (
+    <div>
+      {/* {message.addedAt} */}
+      <b>{message.senderName}</b>
+      <div
+        dangerouslySetInnerHTML={{ __html: sanitizer.sanitize(message.body) }}
+      />
+      {message.viewed ? (
+        <IoMdCheckmark style={{ color: 'green' }} />
+      ) : (
+        <IoMdCheckmark />
+      )}
+      <span style={{ float: 'right' }}>
+        {message.addedAt.match(/\d\d:\d\d/i)}{' '}
+      </span>
+      <hr />
+    </div>
+  );
 };
 
 export default Message;

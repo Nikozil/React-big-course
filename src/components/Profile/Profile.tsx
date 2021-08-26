@@ -1,6 +1,8 @@
+import { profile } from 'console';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouteMatch } from 'react-router-dom';
+import { Link, Redirect, useRouteMatch } from 'react-router-dom';
+import { startChatting } from '../../Redax/messages-reducer';
 import {
   savePhoto,
   saveProfile,
@@ -26,6 +28,10 @@ const Profile: React.FC = () => {
   const saveProfileHandler = (profile: ProfileType) =>
     //@ts-ignore
     dispatch(saveProfile(profile) as Promise<void>);
+
+  const startChattingWithId = () => {
+    if (profile?.userId) dispatch(startChatting(profile?.userId));
+  };
   return (
     <div>
       <ProfileInfo
@@ -36,6 +42,11 @@ const Profile: React.FC = () => {
         savePhoto={savePhotoHandler}
         saveProfile={saveProfileHandler}
       />
+      {!isOwner ? (
+        <Link to="/dialogs" onClick={() => startChattingWithId()}>
+          Начать чат
+        </Link>
+      ) : null}
       <MyPostsContainer />
     </div>
   );

@@ -2,24 +2,24 @@
   display: grid;
   grid-template-columns: 2fr 10fr;
 }
+
 .dialogsItems {
   padding: 10px;
+  width: 200px;
+  overflow: hidden;
 }
 .dialogsItems .dialog {
   padding: 5px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .dialogsItems .dialog a {
   margin: 3px;
   text-decoration: none;
   /* color: white; */
 }
-.dialogsItems .dialog img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
+
 .dialogsItems .active {
   color: #f4716a;
 }
@@ -29,16 +29,38 @@
   flex-direction: column;
   justify-content: space-between;
 }
-.messages .message {
+/* .messages .message {
   color: rgb(18, 33, 241);
 }
 
 .messages .right {
   color: rgb(2, 102, 44);
   text-align: right;
-}
+} */
 
 .addMessage textarea {
   height: 50px;
-  width: 800px;
+  width: 100%;
+  max-width: 800px;
+  min-width: 200px;
+}
+
+.avatar {
+  min-width: 45px;
+  width: 45px;
+  height: 45px;
+  border-radius: 5%;
+  margin-right: 5px;
+}
+.counter {
+  margin-left: 5px;
+}
+.userName {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.dialogsItems div:first-child {
+  border-radius: 3%;
+  background-color: rgba(141, 141, 141, 0.685);
 }

@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Field, Form } from 'react-final-form';
-import { DialogType, MessagesType } from '../../Redax/messages-reducer';
+import { useDispatch } from 'react-redux';
+import {
+  DialogType,
+  MessageType,
+  sendMessage,
+  setDialogs,
+  setMessagesFromFriend,
+  startChatting,
+} from '../../Redax/messages-reducer';
 import {
   composeValidators,
   maxLengthCreator,
@@ -14,32 +22,48 @@ type DialogsPropsType = {
   message: string;
 
   dialogs: Array<DialogType>;
-  messages: Array<MessagesType>;
+  messages: Array<MessageType>;
 
   sendMessage: (message: string) => void;
 };
 
 const Dialogs: React.FC<DialogsPropsType> = (props) => {
+  const [id, setId] = useState('');
+  const dialogID = props.dialogs[0].id;
   let sendMessage = (message: string) => {
     props.sendMessage(message);
   };
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setDialogs());
+  }, []);
+  useEffect(() => {
+    dispatch(setMessagesFromFriend(dialogID, 1, 10));
+  }, [props.dialogs]);
+  const startChattingWithId = () => {
+    dispatch(startChatting(+id));
+  };
+
   return (
-    <div className={s.dialogs}>
-      <div className={s.dialogsItems}>
-        {props.dialogs.map((i) => (
-          <DialogItem name={i.name} key={i.id} id={i.id} src={i.ava} />
-        ))}
-      </div>
-      <div className={s.messages}>
-        <div>
-          {props.messages.map((i) => (
-            <Message id={i.id} key={i.id} message={i.message} />
+    <div>
+      <div className={s.dialogs}>
+        <div className={s.dialogsItems}>
+          {props.dialogs.map((i) => (
+            <DialogItem owner={i} key={i.id} />
           ))}
         </div>
+        <div className={s.messages}>
+          <div>
+            {props.messages.map((i) => (
+              <Message message={i} key={i.id} />
+            ))}
+          </div>
 
-        <div className={s.addMessage}>
-          <DialogForm sendMessage={sendMessage} />
+          <div className={s.addMessage}>
+            <DialogForm sendMessage={sendMessage} id={dialogID} />
+          </div>
         </div>
       </div>
     </div>
@@ -48,16 +72,23 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
 type DialogFormPropsType = {
   sendMessage: (message: string) => void;
+  id: number;
 };
 
-const DialogForm: React.FC<DialogFormPropsType> = (props) => {
+const DialogForm: React.FC<DialogFormPropsType> = ({ id }) => {
+  const dispatch = useDispatch();
+  const sendMessageHandler = (id: number, message: string) => {
+    dispatch(sendMessage(id, message));
+  };
   return (
     <div>
       <Form
         onSubmit={(MessageData) => {
-          props.sendMessage(MessageData.message);
+          sendMessageHandler(id, MessageData.message);
+          setTimeout(() => dispatch(setMessagesFromFriend(id, 1, 10)), 100);
+          MessageData.message = '';
         }}
-        render={({ handleSubmit }) => (
+        render={({ handleSubmit, form }) => (
           <form onSubmit={handleSubmit}>
             <div>
               <Field
@@ -65,6 +96,9 @@ const DialogForm: React.FC<DialogFormPropsType> = (props) => {
                 validate={composeValidators(required, maxLengthCreator(100))}
                 component="textarea"
                 type="text"
+                onKeyPress={(event: KeyboardEvent) => {
+                  if (event.key === 'Enter') form.submit();
+                }}
                 placeholder="Enter your message"></Field>
             </div>
             <button type="submit">Add Message</button>

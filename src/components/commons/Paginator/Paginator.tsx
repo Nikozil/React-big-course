@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import s from './Paginator.module.css';
 import cn from 'classnames';
+import { Pagination } from 'antd';
+import { setPageSize } from '../../../Redax/users-reducer';
+import { useDispatch } from 'react-redux';
 
 type PropsType = {
   totalItemsCount: number;
@@ -26,10 +29,20 @@ const Paginator: React.FC<PropsType> = ({
   let [portionNumber, setPortionNumber] = useState(1);
   let leftPortionNumber = (portionNumber - 1) * portionSize + 1;
   let rightPortionNumber = portionNumber * portionSize;
+  const dispatch = useDispatch();
+  const changePaginatorHandler = (
+    page: number,
+    pageSize?: number | undefined
+  ): void | undefined => {
+    if (pageSize) dispatch(setPageSize(pageSize));
+
+    onPageChanged(page);
+  };
+  console.log(pageSize);
 
   return (
     <div>
-      <div className={s.pagesButtons}>
+      {/* <div className={s.pagesButtons}>
         {portionNumber > 1 && (
           <button
             onClick={() => {
@@ -58,7 +71,13 @@ const Paginator: React.FC<PropsType> = ({
             Next
           </button>
         )}
-      </div>
+      </div> */}
+      <Pagination
+        defaultCurrent={currentPage}
+        total={totalItemsCount}
+        onChange={changePaginatorHandler}
+        pageSize={pageSize}
+      />
     </div>
   );
 };

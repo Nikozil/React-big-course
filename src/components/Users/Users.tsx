@@ -63,7 +63,7 @@ export const Users: React.FC<PropsType> = () => {
       };
 
     dispatch(requestUsers(actualPage, pageSize, actualFilter));
-  }, []);
+  }, [pageSize]);
 
   useEffect(() => {
     const query: QuerryType = {};

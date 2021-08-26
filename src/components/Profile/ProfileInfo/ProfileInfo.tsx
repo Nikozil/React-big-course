@@ -158,7 +158,12 @@ const MainPageAvatar: React.FC<MainPageAvatarType> = ({
   };
   return (
     <>
-      <Avatar owner={profile} size={'large'} className={s.photo} />
+      <Avatar
+        owner={profile}
+        size={'large'}
+        className={s.photo}
+        defaultSize={200}
+      />
       {isOwner && (
         <div>
           <label htmlFor={'image_uploads'} className={s.avatarButtonLabel}>

@@ -1,4 +1,4 @@
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Tag } from 'antd';
 import 'antd/dist/antd.css';
 import React from 'react';
 import { connect, Provider } from 'react-redux';
@@ -30,14 +30,17 @@ const DialogsContainer = React.lazy(
 const ProfileContainer = React.lazy(
   () => import('./components/Profile/ProfileContainer')
 );
+const ChatPage = React.lazy(() => import('./pages/Chat/ChatPage'));
 // import DialogsContainer from './components/Dialogs/DialogsContainer';
 // import ProfileContainer from './components/Profile/ProfileContainer';
 
 const SuspendedDialog = withSuspense(DialogsContainer);
 const SuspendedProfile = withSuspense(ProfileContainer);
+const SuspendedChat = withSuspense(ChatPage);
 
 type mapStateToPropsType = {
   initialized: boolean;
+  newMessageCount: number;
 };
 type mapDispatchToPropsType = {
   initializeAPP: () => void;
@@ -82,25 +85,38 @@ class App extends React.Component<
           <Layout
             className="site-layout-background"
             style={{ padding: '24px 0 0 0', minHeight: '93vh' }}>
-            <Sider className="site-layout-background" width={200}>
+            <Sider
+              breakpoint="lg"
+              collapsedWidth="0"
+              className="site-layout-background"
+              width={200}>
               <Menu mode="inline" style={{ height: '100%' }}>
                 <Menu.Item key="1">
                   <NavLink to="/profile">Profile</NavLink>
                 </Menu.Item>
                 <Menu.Item key="2">
-                  <NavLink to="/dialogs">Messages</NavLink>
+                  <NavLink to="/dialogs">
+                    Messages{' '}
+                    <Tag color="#2db7f5">{this.props.newMessageCount}</Tag>
+                    {this.props.newMessageCount != 0 && (
+                      <Tag color="#2db7f5">{this.props.newMessageCount}</Tag>
+                    )}
+                  </NavLink>
                 </Menu.Item>
                 <Menu.Item key="3">
                   <NavLink to="/users">Users</NavLink>
                 </Menu.Item>
                 <Menu.Item key="4">
+                  <NavLink to="/chat">Chat</NavLink>
+                </Menu.Item>
+                <Menu.Item key="5">
                   <NavLink to="/news">News</NavLink>
                 </Menu.Item>
 
-                <Menu.Item key="5">
+                <Menu.Item key="6">
                   <NavLink to="/music">Music</NavLink>
                 </Menu.Item>
-                <Menu.Item key="6">
+                <Menu.Item key="7">
                   <NavLink to="/settings">Settings</NavLink>
                 </Menu.Item>
               </Menu>
@@ -131,6 +147,7 @@ class App extends React.Component<
                   path="/users"
                   render={() => <UsersPage pageTitle={'Пользователи'} />}
                 />
+                <Route path="/chat" render={() => <SuspendedChat />} />
 
                 <Route path="/settings" component={Settings} />
                 <Route
@@ -155,6 +172,7 @@ class App extends React.Component<
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
   initialized: state.app.initialized,
+  newMessageCount: state.messagesPage.newMessageCount,
 });
 type ownPropsType = {};
 let AppContainer = compose<React.ComponentType>(

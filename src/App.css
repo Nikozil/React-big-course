@@ -16,3 +16,7 @@
   grid-area: c;
   background: rgb(0, 81, 128);
 }
+.ant-layout-sider-zero-width-trigger {
+  top: 0;
+  left: -36px;
+}

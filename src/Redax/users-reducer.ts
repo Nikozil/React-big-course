@@ -72,6 +72,11 @@ export const usersReducer = (
         ...state,
         filter: action.payload,
       };
+    case 'learningReact/users/SET_PAGE_SIZE':
+      return {
+        ...state,
+        pageSize: action.payload,
+      };
     default:
       return state;
   }
@@ -119,6 +124,11 @@ export const actions = {
     ({
       type: 'learningReact/users/SET_Filter',
       payload: filter,
+    } as const),
+  setPageSize: (pageSize: number) =>
+    ({
+      type: 'learningReact/users/SET_PAGE_SIZE',
+      payload: pageSize,
     } as const),
 };
 
@@ -177,6 +187,11 @@ export const unfollow = (id: number): ThunkType => {
       UsersAPI.unfollow.bind(UsersAPI),
       actions.acceptunfollow
     );
+  };
+};
+export const setPageSize = (PageSize: number): ThunkType => {
+  return async (dispatch) => {
+    dispatch(actions.setPageSize(PageSize));
   };
 };
 

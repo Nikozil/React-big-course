@@ -4,7 +4,7 @@ import { compose, Dispatch } from 'redux';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import {
   DialogType,
-  MessagesType,
+  MessageType,
   actions,
   ActionsTypes,
 } from '../../Redax/messages-reducer';
@@ -13,7 +13,7 @@ import Dialogs from './Dialogs';
 
 type MapStatePropsType = {
   dialogs: Array<DialogType>;
-  messages: Array<MessagesType>;
+  messages: Array<MessageType>;
 };
 
 type MapDispatchPropsType = {
@@ -26,7 +26,7 @@ type OwnPropsType = {
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     dialogs: state.messagesPage.dialogs,
-    messages: state.messagesPage.messages,
+    messages: state.messagesPage.messages.items,
   };
 };
 let mapDispatchToProps = (
