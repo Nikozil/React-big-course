@@ -22,6 +22,7 @@ import UsersPage from './components/Users/UsersPage';
 import { withSuspense } from './hoc/withSuspense';
 import { initializeAPP } from './Redax/app-reducer';
 import { makelogin } from './Redax/auth-reducer';
+import { setCount } from './Redax/messages-reducer';
 import store, { AppStateType } from './Redax/redux-store';
 
 const DialogsContainer = React.lazy(
@@ -45,6 +46,7 @@ type mapStateToPropsType = {
 type mapDispatchToPropsType = {
   initializeAPP: () => void;
   makelogin: () => void;
+  setCount: () => void;
 };
 
 class App extends React.Component<
@@ -57,6 +59,7 @@ class App extends React.Component<
   componentDidMount() {
     this.props.initializeAPP();
     window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors);
+    this.props.setCount();
   }
   componentWillUnmount() {
     window.removeEventListener(
@@ -97,7 +100,6 @@ class App extends React.Component<
                 <Menu.Item key="2">
                   <NavLink to="/dialogs">
                     Messages{' '}
-                    <Tag color="#2db7f5">{this.props.newMessageCount}</Tag>
                     {this.props.newMessageCount != 0 && (
                       <Tag color="#2db7f5">{this.props.newMessageCount}</Tag>
                     )}
@@ -182,7 +184,7 @@ let AppContainer = compose<React.ComponentType>(
     mapDispatchToPropsType,
     ownPropsType,
     AppStateType
-  >(mapStateToProps, { makelogin, initializeAPP })
+  >(mapStateToProps, { makelogin, initializeAPP, setCount })
 )(App);
 
 const MainApp: React.FC = () => (
