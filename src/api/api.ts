@@ -15,7 +15,7 @@ export type UsersAPIType = {
   error: string | null;
 };
 
-type ResponseType<D = {}, RC = ResultCodeEnum> = {
+export type ResponseType<D = {}, RC = ResultCodeEnum> = {
   data: D;
   messages: Array<string>;
   resultCode: RC;

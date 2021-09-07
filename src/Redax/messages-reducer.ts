@@ -56,7 +56,7 @@ let initialState = {
     ],
     totalCount: 1,
     error: null,
-  } as MessagesType,
+  } as MessagesType | null,
   newMessageCount: 0,
 };
 export type initialStateType = typeof initialState;
@@ -86,6 +86,12 @@ const messagesReducer = (
         },
       };
     }
+    case 'learningReact/messages/WIPE_MESSAGES': {
+      return {
+        ...state,
+        messages: null,
+      };
+    }
 
     default:
       return state;
@@ -111,10 +117,14 @@ export const actions = {
       type: 'learningReact/messages/SET_DIALOGS',
       payload: dialogs,
     } as const),
-  setMessages: (messages: any) =>
+  setMessages: (messages: MessagesType) =>
     ({
       type: 'learningReact/messages/SET_MESSAGES',
       payload: messages,
+    } as const),
+  wipeMessages: () =>
+    ({
+      type: 'learningReact/messages/WIPE_MESSAGES',
     } as const),
 };
 
@@ -138,6 +148,7 @@ export const setDialogs = (): ThunkType => async (dispatch) => {
 export const setMessagesFromFriend =
   (id: number, currentPage: number, pageSize: number): ThunkType =>
   async (dispatch) => {
+    dispatch(actions.wipeMessages());
     let data = await DialogsAPI.getMessagesFromFriend(
       id,
       currentPage,

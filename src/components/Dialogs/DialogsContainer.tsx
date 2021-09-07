@@ -7,13 +7,14 @@ import {
   MessageType,
   actions,
   ActionsTypes,
+  MessagesType,
 } from '../../Redax/messages-reducer';
 import { AppStateType } from '../../Redax/redux-store';
 import Dialogs from './Dialogs';
 
 type MapStatePropsType = {
   dialogs: Array<DialogType>;
-  messages: Array<MessageType>;
+  messages: MessagesType | null;
 };
 
 type MapDispatchPropsType = {
@@ -26,7 +27,7 @@ type OwnPropsType = {
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     dialogs: state.messagesPage.dialogs,
-    messages: state.messagesPage.messages.items,
+    messages: state.messagesPage.messages,
   };
 };
 let mapDispatchToProps = (

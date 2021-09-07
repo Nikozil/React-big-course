@@ -1,10 +1,20 @@
-import { DialogType } from '../Redax/messages-reducer';
+import {
+  DialogType,
+  MessagesType,
+  MessageType,
+} from '../Redax/messages-reducer';
 import { FilterType } from '../Redax/users-reducer';
-import { instance, UsersAPIType, SuccessRequestType } from './api';
+import {
+  instance,
+  UsersAPIType,
+  SuccessRequestType,
+  ResponseType,
+} from './api';
 
 export type DialogsAPIType = {
   dialogs: {};
 };
+export type sendMessageAPIType = ResponseType<MessageType>;
 
 export const DialogsAPI = {
   async getDialogs() {
@@ -17,19 +27,19 @@ export const DialogsAPI = {
     return response.data;
   },
   //startChatting response {"data":{},"messages":[],"fieldsErrors":[],"resultCode":0}
-  async getMessagesFromFriend<DialogsAPIType>(
+  async getMessagesFromFriend(
     id: number,
     currentPage: number,
     pageSize: number
   ) {
-    let response = await instance.get<DialogsAPIType>(
+    let response = await instance.get<MessagesType>(
       `/dialogs/${id}/messages?page=${currentPage}&count=${pageSize}`
     );
     return response.data;
   },
   //getMessagesFromFriend {"items":[{"id":"a9ab74c9-2dcf-4833-9618-f285c2568eea","body":"1","translatedBody":null,"addedAt":"2021-08-26T11:46:13.943","senderId":15421,"senderName":"Darius","recipientId":19273,"viewed":false},{"id":"d9935c72-afbe-4af1-aabb-7860769fca5e","body":"test","translatedBody":null,"addedAt":"2021-08-26T11:46:34.14","senderId":15421,"senderName":"Darius","recipientId":19273,"viewed":false}],"totalCount":2,"error":null}
   async sendMessage(id: number, message: string) {
-    let response = await instance.post<DialogsAPIType>(
+    let response = await instance.post<sendMessageAPIType>(
       `dialogs/${id}/messages`,
       { body: message }
     );

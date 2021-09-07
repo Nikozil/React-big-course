@@ -3,6 +3,7 @@ import { Field, Form } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import {
   DialogType,
+  MessagesType,
   MessageType,
   sendMessage,
   setDialogs,
@@ -17,12 +18,14 @@ import {
 import DialogItem from './DialogItem/DialogItem';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 type DialogsPropsType = {
   message: string;
 
   dialogs: Array<DialogType>;
-  messages: Array<MessageType>;
+  messages: MessagesType;
 
   sendMessage: (message: string) => void;
 };
@@ -45,6 +48,7 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
   const startChattingWithId = () => {
     dispatch(startChatting(+id));
   };
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   return (
     <div>
@@ -56,11 +60,14 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
         </div>
         <div className={s.messages}>
           <div>
-            {props.messages.map((i) => (
-              <Message message={i} key={i.id} />
-            ))}
+            {props.messages ? (
+              props.messages.items.map((i) => (
+                <Message message={i} key={i.id} />
+              ))
+            ) : (
+              <Spin indicator={antIcon} className={s.loader} />
+            )}
           </div>
-
           <div className={s.addMessage}>
             <DialogForm sendMessage={sendMessage} id={dialogID} />
           </div>
